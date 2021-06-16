@@ -1,14 +1,17 @@
 import { Route, Switch } from 'react-router-dom';
+import DrinksProvider from './context/Provider';
 import DetailsPage from './pages/DetailsPage';
 import HomePage from './pages/HomePage';
 
 function App() {
   return (
     <div>
-      <Switch>
-        <Route exact path="/" component={ HomePage }/>
-        <Route path="/details" component={ DetailsPage } />
-      </Switch>
+      <DrinksProvider>
+        <Switch>
+          <Route exact path="/" component={ HomePage }/>
+          <Route path="/details" component={ DetailsPage } />
+        </Switch>
+      </DrinksProvider>
     </div>
   );
 }
