@@ -13,7 +13,7 @@ function useFetch() {
   const searchFetch = async (inputValues) => {
     const { search, type } = inputValues;
     const um = 1;
-    if (type === 'name') {
+    if (type === 'name' && search.length > 1) {
       const results = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
         .then((response) => response.json());
       if (results.drinks === null) return setNoRecipes(true);

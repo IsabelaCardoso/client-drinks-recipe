@@ -3,6 +3,8 @@ import DrinksContext from '../context/Context';
 import '../css/DrinksCard.css'
 import useFetch from '../services/useFetch';
 import DrinksCard from '../components/DrinksCard';
+import { Link } from 'react-router-dom';
+import backArrow from '../images/backArrow.png'
 // import DrinksList from '../components/DrinksList';
 // import Header from '../components/Header';
 
@@ -29,7 +31,10 @@ function FavoriteDrinksPage() {
   
   return (
     <>
-      {recipes && recipes.map((recipe) => {
+      <Link to="/">
+        <img className="arrow-icon" src={ backArrow } alt="black arrow pointing left, go back" />
+      </Link>
+      {(recipes && recipes[0]) && recipes.map((recipe) => {
         const drink = recipe.drinks[0];
         return <DrinksCard
          key={ drink.idDrink }

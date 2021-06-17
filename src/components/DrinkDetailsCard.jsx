@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import DrinksContext from '../context/Context';
 import '../css/DrinksCard.css'
 import useFetch from '../services/useFetch';
-import FavoriteHeart from './FavoriteHeart';
+import FavoriteButton from './FavoriteButton';
+import ShareButton from './ShareButton';
 
 function DrinkDetailsCard() {
   const { drinkDetailsFetch } = useFetch();
@@ -10,7 +11,7 @@ function DrinkDetailsCard() {
   const [loading, setLoading] = useState(true);
   const [measures, setMeasures] = useState();
   const [ingredients, setIngredients] = useState();
-  
+
   const idDrink = (window.location.href).split('details/')[1];
 
   useEffect(() => {
@@ -45,7 +46,8 @@ function DrinkDetailsCard() {
       <div>
         <h1>{ drink.strDrink }</h1>
         { drink.strAlcoholic && <p>{ drink.strAlcoholic }</p>}
-        <FavoriteHeart />
+        <FavoriteButton />
+        <ShareButton />
       </div>
       <img className="drink-thumb" src={ drink.strDrinkThumb } alt={ drink.strDrink }/>
       <ul> Ingredients
