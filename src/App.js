@@ -1,6 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
 import DrinksProvider from './context/Provider';
 import DetailsPage from './pages/DetailsPage';
+import FavoriteDrinksPage from './pages/FavoriteDrinksPage';
 import HomePage from './pages/HomePage';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={ HomePage }/>
           <Route path="/details/:id" component={ DetailsPage } />
+          <Route path="/favorite" component={ FavoriteDrinksPage } />
         </Switch>
       </DrinksProvider>
     </div>

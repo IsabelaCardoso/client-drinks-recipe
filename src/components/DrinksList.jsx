@@ -6,8 +6,8 @@ import DrinksCard from './DrinksCard';
 function DrinksList() {
   const [loading, setLoading] = useState(true);
   const { randomDrinksFetch } = useFetch();
-  const { recipes, setRecipes } = useContext(DrinksContext);
-  
+  const { recipes } = useContext(DrinksContext);
+
   useEffect(() => {
     randomDrinksFetch()
       .then(() => setLoading(false))
@@ -23,7 +23,6 @@ function DrinksList() {
         key={ recipe.idDrink }
         name={ recipe.strDrink }
         thumb={ recipe.strDrinkThumb }
-        type="bebidas"
         id={ recipe.idDrink }
       />})
       }

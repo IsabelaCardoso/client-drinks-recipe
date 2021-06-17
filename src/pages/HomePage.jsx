@@ -5,7 +5,6 @@ import Header from '../components/Header';
 function HomePage() {
   return (
     <>
-      home page
       <Header />
       <DrinksList />
     </>

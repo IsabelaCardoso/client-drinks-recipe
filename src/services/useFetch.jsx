@@ -32,10 +32,29 @@ function useFetch() {
     return setRecipes(results);
   };
 
+  // const getAllById = async (idsList) => {
+  // const urls = idsList.map((drink) => `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink.id}`);
+  // const promises = await Promise.all(urls.map(async(url) => fetch(url)));
+  // const jsons = promises.map(async(p) => p.json());
+  // const jsonPromises = await Promise.all(jsons.map((j) => j));
+  // setRecipes(jsonPromises);
+  // return null;
+  // }
+
+  const getAllById = async (idsList) => {
+    const urls = idsList.map((drink) =>  `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink.id}`);
+    Promise.all(
+      urls.map((url) => fetch(url)
+        .then((response) => response.json())),
+    ).then((result) => setRecipes(result));
+    return null
+  }
+
   return ({
     searchFetch,
     randomDrinksFetch,
     drinkDetailsFetch,
+    getAllById,
   });
 };
 

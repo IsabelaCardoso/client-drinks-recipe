@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/DrinksCard.css'
 
-function DrinksCard({ name, thumb, id }) {
+function DrinksCard({ name, thumb, id, favorite }) {
   return (
     <Link to={`/details/${id}`}>
       <div
@@ -11,6 +11,7 @@ function DrinksCard({ name, thumb, id }) {
         >
         <img className="drink-thumb" src={thumb} alt={`Drink called ${name}`} />
         <p>{ name }</p>
+        {/* {favorite && <FavoriteHeart />} */}
       </div>
     </Link>
   );
