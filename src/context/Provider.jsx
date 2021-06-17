@@ -5,13 +5,15 @@ import DrinksContext from './Context';
 function DrinksProvider({ children }) {
   const [recipes, setRecipes] = useState();
   const [test, setTest] = useState();
-
+  const [noRecipes, setNoRecipes] = useState(false);
 
   const context = {
     recipes,
     setRecipes,
     test,
     setTest,
+    noRecipes,
+    setNoRecipes,
   };
 
   return (

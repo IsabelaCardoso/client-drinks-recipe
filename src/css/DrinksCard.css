@@ -1,0 +1,16 @@
+/* .drink-card {
+  width: 10px;
+  height: auto;
+} */
+
+.drink-thumb {
+  height: auto;
+  width: 180px;
+}
+
+.drinks-card-container {
+  background-color: black;
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}

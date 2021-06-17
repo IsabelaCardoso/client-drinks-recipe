@@ -9,20 +9,19 @@ function SearchBar() {
   const { searchFetch } = useFetch();
   const { recipes } = useContext(DrinksContext);
   const [oneWordHidden, setOneWordHidden] = useState(true);
+  const [notFound, setNotFound] = useState(true);
 
   useEffect(() => {
-    // if (inputValues.type === )
-    const textingTimer = setTimeout(async() => await searchFetch(inputValues), 3000); // chamada da api
+    const textingTimer = setTimeout(async() => await searchFetch(inputValues), 3000);
     return () => clearTimeout(textingTimer);
   }, [inputValues])
 
   const handleChange = (value) => {
     if (!radioType) return alert('Por favor escolha uma categoria');
     if (radioType === 'first-letter' && value.length > 1) return setOneWordHidden(false);
-    if (radioType === 'first-letter' && value.length <= 1) return setOneWordHidden(true);
-    // alert('Sua busca deve conter apenas uma letra');
+    if (radioType === 'first-letter' && value.length <= 1) return setOneWordHidden(true); 
     setInputValues({search: value, type: radioType})
-    if (!recipes) return 
+    if (!recipes && radioType && value) return setNotFound(true);
   };
 
   return (
@@ -51,7 +50,9 @@ function SearchBar() {
         </label>
       </form>
       <span hidden={ oneWordHidden }>Sua busca deve conter apenas uma letra</span>
-      {(recipes && recipes.length > 0) ? <DrinksCard /> : <span>Desculpe, não encontramos nenhuma receita para o filtro selecionado. Tente novamente. </span> }
+      <span hidden={ notFound }>
+        Desculpe, não encontramos nenhuma receita para o filtro selecionado. Tente novamente.</span>
+      {(recipes && recipes.length > 0) && <DrinksCard /> }
     </>
   );
 }
