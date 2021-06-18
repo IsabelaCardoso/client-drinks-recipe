@@ -12,37 +12,37 @@ function Header({ subtitle }) {
 
   return (
     <div>
-    <Titles subtitle={ subtitle } />
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <div class="navbar-item">
-          <img src={logoDrinks} alt="" />
-        </div>
-      </div>
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-          <p class="navbar-item">
-            <Link to="/">Página Principal</Link>
-          </p>
-          <p class="navbar-item">
-            <Link to="/favorite">Drinks favoritos</Link>
-          </p>
-        </div>
-        <div class="navbar-end">
+      <Titles subtitle={subtitle} />
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
           <div class="navbar-item">
-            <div class="buttons">
-              <button
-                onClick={() => setSearchBar(!searchBar)}
-                class="button is-primary"
-              >
-                <strong>Pesquisar</strong>
-              </button>
-              {searchBar && <SearchBar />}
+            <img src={logoDrinks} alt="" />
+          </div>
+        </div>
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <p class="navbar-item">
+              <Link to="/">Página Principal</Link>
+            </p>
+            <p class="navbar-item">
+              <Link to="/favorite">Drinks favoritos</Link>
+            </p>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <button
+                  onClick={() => setSearchBar(!searchBar)}
+                  class="button is-primary"
+                >
+                  <strong>Pesquisar</strong>
+                </button>
+                {searchBar && <SearchBar />}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
     </div>
   );
 }

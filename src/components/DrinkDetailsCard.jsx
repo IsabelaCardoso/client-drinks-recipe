@@ -40,7 +40,7 @@ function DrinkDetailsCard() {
     handleIngredients();
   }, [recipes]);
 
-  if (loading) return <div>Carregando a receita completa...</div>;
+  if (loading) return <div>Loading the recipe...</div>;
   const drink = recipes.drinks[0];
 
   return (
@@ -48,7 +48,7 @@ function DrinkDetailsCard() {
       <div>
         <h1 className="title">{drink.strDrink}</h1>
       </div>
-      {drink.strAlcoholic ? <p>{drink.strAlcoholic}</p> : <p>Non-alcoholic</p> }
+      {drink.strAlcoholic ? <p>{drink.strAlcoholic}</p> : <p>Non-alcoholic</p>}
       <img
         className="drink-thumb-details"
         src={drink.strDrinkThumb}

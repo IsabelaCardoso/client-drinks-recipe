@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import DrinksContext from './Context';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import DrinksContext from "./Context";
 
 function DrinksProvider({ children }) {
   const [recipes, setRecipes] = useState();
@@ -22,14 +22,14 @@ function DrinksProvider({ children }) {
     invalidNameHidden,
     setInvalidNameHidden,
     categoryRequired,
-    setCategoryRequired
+    setCategoryRequired,
   };
 
   return (
     <main>
-    <DrinksContext.Provider value={ context }>
-      {children}
-    </DrinksContext.Provider>
+      <DrinksContext.Provider value={context}>
+        {children}
+      </DrinksContext.Provider>
     </main>
   );
 }
