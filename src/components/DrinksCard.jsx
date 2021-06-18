@@ -4,16 +4,19 @@ import '../css/DrinksCard.css'
 
 function DrinksCard({ name, thumb, id, favorite }) {
   return (
-    <div>
-      <Link to={`/details/${id}`}>
-        <div
-          id={ id }
-          className="drink-card"
-          >
+    <div className="card">
+      <Link className="link" to={`/details/${id}`}>
+      <div className="card-image">
+        <figure className="image">
           <img className="drink-thumb" src={thumb} alt={`Drink called ${name}`} />
-          <p>{ name }</p>
-          {/* {favorite && <FavoriteButton />} */}
+          </figure>
         </div>
+        <div className="media">
+          <div className="media-content">
+            <p className="title test is-4">{ name }</p>
+          </div>
+      </div>
+      {/* {favorite && <FavoriteButton />} */}
       </Link>
     </div>
   );

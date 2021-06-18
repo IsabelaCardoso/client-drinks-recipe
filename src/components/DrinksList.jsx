@@ -16,16 +16,20 @@ function DrinksList() {
   if (loading) return (<div>Carregando seus drinks...</div>);
 
   return (
-    <div className="drinks-card-container">
-      {
-        recipes && recipes.drinks.map((recipe) => {
-        return <DrinksCard
-        key={ recipe.idDrink }
-        name={ recipe.strDrink }
-        thumb={ recipe.strDrinkThumb }
-        id={ recipe.idDrink }
-      />})
-      }
+    <div className="container is-flex">
+      <div className="notification">
+        <div className="drinks-card-container is-justify-content-center">
+          {
+            recipes && recipes.drinks.map((recipe) => {
+            return <DrinksCard
+            key={ recipe.idDrink }
+            name={ recipe.strDrink }
+            thumb={ recipe.strDrinkThumb }
+            id={ recipe.idDrink }
+          />})
+          }
+        </div>
+      </div>
     </div>
   );
 }

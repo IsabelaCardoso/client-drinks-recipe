@@ -4,10 +4,12 @@ import Header from '../components/Header';
 
 function HomePage() {
   return (
-    <>
+    <div class="container is-fluid">
       <Header />
-      <DrinksList />
-    </>
+      <div class="notification">
+        <DrinksList />
+      </div>
+    </div>
   );
 }
 
