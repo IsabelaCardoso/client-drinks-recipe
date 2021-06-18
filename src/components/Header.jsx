@@ -1,22 +1,18 @@
 import React, { useContext, useState } from "react";
 import SearchBar from "./SearchBar";
-import searchIcon from "../images/searchIcon.png";
-import "../css/SearchIcon.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DrinksContext from "../context/Context";
 import ShareButton from "./ShareButton";
 import logoDrinks from "../images/logo-drinks.png";
+import Titles from "./Titles";
 
-function Header() {
+function Header({ subtitle }) {
   const [searchBar, setSearchBar] = useState(false);
   const { setRecipes } = useContext(DrinksContext);
 
-  // const handleClick = () => {
-  //   setRecipes('null');
-  //   return (<Redirect path="/favorite" />);
-  // }
-
   return (
+    <div>
+    <Titles subtitle={ subtitle } />
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <div class="navbar-item">
@@ -42,14 +38,12 @@ function Header() {
                 <strong>Pesquisar</strong>
               </button>
               {searchBar && <SearchBar />}
-              {/* <button class="button is-light"> */}
-              <ShareButton />
-              {/* </button> */}
             </div>
           </div>
         </div>
       </div>
     </nav>
+    </div>
   );
 }
 

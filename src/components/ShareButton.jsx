@@ -5,9 +5,6 @@ function ShareButton() {
   const [copied, setCopied] = useState(true);
 
   const clipBoard = (e) => {
-    // const idDrink = e.target.parentNode.parentNode
-    // console.log(e.target.parentNode.parentNode);
-    // console.log(e.target)
     const url = (window.location.href);
     setCopied(false);
     navigator.clipboard.writeText(url);

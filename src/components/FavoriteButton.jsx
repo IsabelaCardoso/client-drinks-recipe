@@ -1,15 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import DrinksContext from '../context/Context';
-import '../css/DrinksCard.css'
 import emptyHeard from '../images/empty-heart.png';
 import filledHeard from '../images/filled-heart.png'
 
 function FavoriteButon() {
   const { recipes } = useContext(DrinksContext);
   const [favorite, setFavorite] = useState();
-  const history = useHistory();
-  console.log('history', history);
 
   const isFavorite = () => {
     if (recipes) {

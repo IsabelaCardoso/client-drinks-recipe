@@ -5,13 +5,10 @@ import DrinksCard from './DrinksCard';
 
 function SearchBar() {
   const { searchFetch } = useFetch();
-  const { recipes, noRecipes, setNoRecipes } = useContext(DrinksContext);
   const [inputValues, setInputValues] = useState({});
   const [inputText, setInputText] = useState('');
   const [radioType, setRadioType] = useState('');
-  const [oneWordHidden, setOneWordHidden] = useState(true);
-  const [hidden, setHidden] = useState(false);
-  const [invalidNameHidden, setInvalidNameHidden] = useState(true);
+  const { recipes, noRecipes, setNoRecipes, setCategoryRequired } = useContext(DrinksContext);
 
   useEffect(() => {
     const textingTimer = setTimeout(async() => await searchFetch(inputValues), 3000);
@@ -22,28 +19,25 @@ function SearchBar() {
     setNoRecipes(false);
   }, [recipes])
 
-  const handleChange = (e) => {
-    console.log(e)
-    console.log('radio', radioType);
-    console.log('input', inputText);
-    if (!radioType && (e.type !== 'radio')) return alert('Por favor escolha uma categoria');
-    if (radioType === 'first-letter' && inputText.length < 1) return setOneWordHidden(true);
-    if (radioType === 'first-letter' && inputText.length >= 1) return setOneWordHidden(false);
-    if (radioType !== 'name') return setInvalidNameHidden(true);
-    if (radioType === 'name' && inputText.length < 2) return setInvalidNameHidden(false);
-    if (radioType === 'name' && inputText.length >= 2) return setInvalidNameHidden(true);
-
-    setInputValues({search: inputText, type: radioType})
+  const handleChange = (search) => {
+    if (!radioType && (search.type !== 'radio')) return setCategoryRequired(true);
+    setInputValues({search, type: radioType})
     if (!recipes && radioType && inputText) return setNoRecipes(!noRecipes);
   };
 
   return (
     <>
-      <form onChange={(e) => handleChange(e.target)}>
-        <input
-          onChange={ (event) => setInputText(event.target.value) }
-        />
-        <label>
+      <form className="is-flex">
+        <div className="field">
+          <div className="control">
+            <input
+              className="input"
+              onChange={ (event) => handleChange(event.target.value) }
+            />
+          </div>
+          </div>
+        <div className="radios">
+        <label className="radio">
           <input
             onChange={ (event) => setRadioType(event.target.id) }
             name="search-type"
@@ -52,7 +46,7 @@ function SearchBar() {
           />
           Primeira Letra
         </label>
-        <label>
+        <label className="radio">
           <input
             onChange={ (event) => setRadioType(event.target.id) }
             name="search-type"
@@ -61,10 +55,8 @@ function SearchBar() {
           />
           Nome
         </label>
+        </div>
       </form>
-      <span hidden={ oneWordHidden }>Sua busca deve conter apenas uma letra</span>
-      <span hidden={ invalidNameHidden }>O nome do drink deve ter pelo menos duas letras</span>
-      <span hidden={ !noRecipes }>Desculpe, não encontramos nenhuma receita para o filtro selecionado. Tente novamente.</span>
       {(recipes && recipes.length > 0) && <DrinksCard /> }
       {/* { noRecipes 
         ? (setNotFound(!notFound) && setHidden(true))

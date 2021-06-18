@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import DrinksContext from '../context/Context';
-import '../css/DrinksCard.css'
 import useFetch from '../services/useFetch';
 import DrinksCard from '../components/DrinksCard';
 import { Link } from 'react-router-dom';
 import backArrow from '../images/backArrow.png'
+import Titles from '../components/Titles';
 // import DrinksList from '../components/DrinksList';
 // import Header from '../components/Header';
 
@@ -31,20 +31,25 @@ function FavoriteDrinksPage() {
   
   return (
     <>
+    <Titles subtitle="Favoritos"/>
       <Link to="/">
         <img className="arrow-icon" src={ backArrow } alt="black arrow pointing left, go back" />
       </Link>
-      {(recipes && recipes[0]) && recipes.map((recipe) => {
-        const drink = recipe.drinks[0];
-        return <DrinksCard
-         key={ drink.idDrink }
-         name={ drink.strDrink }
-         thumb={ drink.strDrinkThumb }
-         id={ drink.idDrink }
-         type="favorite"
-       />
-      }
-      )}
+      <div className="container is-flex">
+      <div className="notification">
+        <div className="drinks-card-container is-justify-content-center">
+          {(recipes && recipes[0]) && recipes.map((recipe) => {
+          const drink = recipe.drinks[0];
+          return <DrinksCard
+          key={ drink.idDrink }
+          name={ drink.strDrink }
+          thumb={ drink.strDrinkThumb }
+          id={ drink.idDrink }
+          type="favorite"
+          />})}
+        </div>
+      </div>
+    </div>
       <span hidden={!noFavorites}>Parece que você ainda não tem nenhum drink favorito</span>
     </>
   );

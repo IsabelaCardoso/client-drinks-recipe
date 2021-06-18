@@ -2,24 +2,30 @@ import { useContext } from "react";
 import DrinksContext from "../context/Context";
 
 function useFetch() {
-  const { setRecipes, setNoRecipes } = useContext(DrinksContext);
+  const { setRecipes, setNoRecipes, setOneWordHidden, setInvalidNameHidden } = useContext(DrinksContext);
 
   const randomDrinksFetch = async () => {
     const results = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
-      .then((response) => response.json());
-    return setRecipes(results);
+      .then((response) => response.json())
+      .then((result) => result.drinks.slice(0, 18));
+    return setRecipes({ drinks: results });
   };
 
   const searchFetch = async (inputValues) => {
     const { search, type } = inputValues;
-    const um = 1;
+    if (type === 'first-letter' && search.length > 1) {
+      setOneWordHidden(true);
+    }
+    if (type === 'name' && search.length > 1) {
+      setInvalidNameHidden(true);
+    }
     if (type === 'name' && search.length > 1) {
       const results = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
         .then((response) => response.json());
       if (results.drinks === null) return setNoRecipes(true);
       return setRecipes(results);
     }
-    if (type === 'first-letter' && search.length === um) {
+    if (type === 'first-letter' && search.length === 1) {
       const results = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`)
         .then((response) => response.json());
       return setRecipes(results);

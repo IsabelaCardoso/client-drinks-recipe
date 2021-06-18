@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../css/DrinksCard.css'
 
 function DrinksCard({ name, thumb, id, favorite }) {
   return (
@@ -16,7 +15,6 @@ function DrinksCard({ name, thumb, id, favorite }) {
             <p className="title test is-4">{ name }</p>
           </div>
       </div>
-      {/* {favorite && <FavoriteButton />} */}
       </Link>
     </div>
   );

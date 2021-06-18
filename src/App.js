@@ -3,6 +3,7 @@ import DrinksProvider from './context/Provider';
 import DetailsPage from './pages/DetailsPage';
 import FavoriteDrinksPage from './pages/FavoriteDrinksPage';
 import HomePage from './pages/HomePage';
+import './App.css'
 
 function App() {
   return (

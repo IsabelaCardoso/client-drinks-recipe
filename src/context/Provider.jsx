@@ -6,6 +6,9 @@ function DrinksProvider({ children }) {
   const [recipes, setRecipes] = useState();
   const [test, setTest] = useState();
   const [noRecipes, setNoRecipes] = useState(false);
+  const [oneWordHidden, setOneWordHidden] = useState(false);
+  const [invalidNameHidden, setInvalidNameHidden] = useState(false);
+  const [categoryRequired, setCategoryRequired] = useState(false);
 
   const context = {
     recipes,
@@ -14,6 +17,12 @@ function DrinksProvider({ children }) {
     setTest,
     noRecipes,
     setNoRecipes,
+    oneWordHidden,
+    setOneWordHidden,
+    invalidNameHidden,
+    setInvalidNameHidden,
+    categoryRequired,
+    setCategoryRequired
   };
 
   return (
