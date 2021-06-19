@@ -2,14 +2,19 @@ import React from 'react';
 import renderWithRouter from './helper/renderWithRouter';
 import Provider from '../context/Provider';
 import FavoriteDrinksPage from '../pages/FavoriteDrinksPage';
-import recipesLocalStorage from './helper/recipesLocalStorage';
+import recipesLocalStorage from './helper/fixtures/recipesLocalStorage';
 import LocalStorageMock from './helper/localStorage';
+import { cleanup } from '@testing-library/react';
 
 describe('Tests the FavoriteDrinksPage elements', () => {
-  it('should get items from LocalStorage and render', async() => {
+
+  beforeEach(() => {
     global.localStorage = new LocalStorageMock();
     localStorage.setItem('favoriteDrinks', JSON.stringify(recipesLocalStorage));
+  });
+  afterEach(cleanup);
 
+  it('should get items from LocalStorage and render', async() => {
     const { findByText } = renderWithRouter(<Provider><FavoriteDrinksPage /></Provider>);
     const drinkGG = await findByText('GG');
     const drinkA1 = await findByText('A1');
@@ -27,6 +32,7 @@ describe('Tests the FavoriteDrinksPage elements', () => {
     const { findAllByTestId } = renderWithRouter(<Provider><FavoriteDrinksPage /></Provider>);
     const favoriteButton = await findAllByTestId('favorite-button');
     expect(favoriteButton).toBeTruthy();
+    expect(favoriteButton.length).toEqual(2);
   });
 
   it('test if the correct subtitle is on the page', async() => {

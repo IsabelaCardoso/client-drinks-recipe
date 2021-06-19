@@ -7,7 +7,7 @@ import backArrow from "../images/backArrow.png";
 function DetailsPage() {
   return (
     <>
-      <Titles subtitle="Receita completa" />
+      <Titles subtitle="Complete Recipe" />
       <Link to="/">
         <img
           className="arrow-icon"

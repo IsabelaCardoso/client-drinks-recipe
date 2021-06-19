@@ -6,7 +6,7 @@ import ShareButton from "./ShareButton";
 
 function DrinkDetailsCard() {
   const { drinkDetailsFetch } = useFetch();
-  const { recipes } = useContext(DrinksContext);
+  const { recipes, setRecipes } = useContext(DrinksContext);
   const [loading, setLoading] = useState(true);
   const [measures, setMeasures] = useState();
   const [ingredients, setIngredients] = useState();
@@ -14,7 +14,9 @@ function DrinkDetailsCard() {
   const idDrink = window.location.href.split("details/")[1];
 
   useEffect(() => {
-    drinkDetailsFetch(idDrink).then(() => setLoading(false));
+    drinkDetailsFetch(idDrink)
+    .then((result) => setRecipes(result))
+    .then(() => setLoading(false));
   }, []);
 
   const handleIngredients = () => {
@@ -48,7 +50,9 @@ function DrinkDetailsCard() {
       <div>
         <h1 className="title">{drink.strDrink}</h1>
       </div>
-      {drink.strAlcoholic ? <p>{drink.strAlcoholic}</p> : <p>Non-alcoholic</p>}
+      {drink.strAlcoholic 
+        ? <p data-testid="drink-alcoholic-or-not">{drink.strAlcoholic}</p>
+        : <p data-testid="drink-alcoholic-or-not">Non-alcoholic</p>}
       <img
         className="drink-thumb-details"
         src={drink.strDrinkThumb}
@@ -61,9 +65,8 @@ function DrinkDetailsCard() {
           </h5>
           <br />
           {ingredients.map((ingredient, index) => {
-            if (measures[index][1] === null)
-              return <li>{`${ingredient[1]}`}</li>;
-            return <li>{`${ingredient[1]} - ${measures[index][1]}`}</li>;
+            if (measures[index][1] === null) return <li key={ingredient}>{`${ingredient[1]}`}</li>;
+            return <li key={ingredient}>{`${ingredient[1]} - ${measures[index][1]}`}</li>;
           })}
         </ul>
         <div className="is-flex">

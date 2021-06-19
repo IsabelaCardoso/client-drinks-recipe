@@ -13,10 +13,14 @@ function ShareButton() {
 
   return (
     <>
-      <button type="button" onClick={(e) => clipBoard(e)}>
+      <button
+        data-testid="share-button"      
+        type="button"
+        onClick={(e) => clipBoard(e)}
+      >
         <img src={shareIcon} alt="share icon" className="icon" />
       </button>
-      <span hidden={copied}>Link copiado!</span>
+      <span hidden={copied}>Link copied!</span>
     </>
   );
 }
