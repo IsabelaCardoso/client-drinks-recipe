@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import DrinksContext from "../context/Context";
 import useFetch from "../services/useFetch";
 import DrinksCard from "../components/DrinksCard";
-import { Link } from "react-router-dom";
-import backArrow from "../images/backArrow.png";
 import Titles from "../components/Titles";
+import BackToHomeArrow from "../components/BackToHomeArrow";
 
 function FavoriteDrinksPage() {
   const [loading, setLoading] = useState(true);
@@ -34,15 +33,9 @@ function FavoriteDrinksPage() {
   return (
     <>
       <Titles subtitle="Favorites" />
-      <Link to="/">
-        <img
-          className="arrow-icon"
-          src={backArrow}
-          alt="black arrow pointing left, go back"
-        />
-      </Link>
-      <div className="container is-flex">
-        <div className="notification">
+      <BackToHomeArrow />
+      <div className="container">
+        <div>
           <div className="drinks-card-container is-justify-content-center">
             {recipes &&
               recipes[0] &&

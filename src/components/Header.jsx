@@ -12,8 +12,8 @@ function Header({ subtitle }) {
   return (
     <div>
       <Titles subtitle={subtitle} />
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-        <div id="navbarBasicExample" className="navbar-menu">
+      <nav className="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
+        <div className="navbar-menu has-background-grey-darker">
           <div className="navbar-start">
             <p className="navbar-item">
               <Link to="/">Home</Link>
@@ -22,18 +22,16 @@ function Header({ subtitle }) {
               <Link to="/favorite">Favorite Drinks</Link>
             </p>
           </div>
+          </div>
           <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="buttons">
+            <div className="navbar-item is-align-items-flex-start">
                 <button
                   onClick={() => setSearchBar(!searchBar)}
-                  className="button is-primary"
+                  className="button search-button is-outlined m-0 mr-2"
                 >
                   <strong>Search</strong>
                 </button>
-                {searchBar && <SearchBar />}
-              </div>
-            </div>
+              {searchBar && <SearchBar />}
           </div>
         </div>
       </nav>

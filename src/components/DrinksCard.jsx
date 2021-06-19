@@ -7,13 +7,11 @@ function DrinksCard({ origin, name, thumb, id, favorite }) {
     <div className="card">
       <Link data-testid={ name } className="link" to={`/details/${id}`}>
         <div className="card-image">
-          <figure className="image">
             <img
               className="drink-thumb"
               src={ thumb }
               alt={`Drink called ${ name }`}
             />
-          </figure>
         </div>
         <div className="media">
           <div className="media-content">

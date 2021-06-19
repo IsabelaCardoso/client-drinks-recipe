@@ -14,11 +14,13 @@ function ShareButton() {
   return (
     <>
       <button
+        class="button is-white"
         data-testid="share-button"      
         type="button"
         onClick={(e) => clipBoard(e)}
       >
-        <img src={shareIcon} alt="share icon" className="icon" />
+        <ion-icon size="large" name="share-social-outline"></ion-icon>
+        {/* <img src={shareIcon} alt="share icon" className="icon" /> */}
       </button>
       <span hidden={copied}>Link copied!</span>
     </>

@@ -34,7 +34,6 @@ function SearchBar() {
     <>
       <form
         data-testid="search-form"
-        className="is-flex"
       >
         <div className="field">
           <div className="control">

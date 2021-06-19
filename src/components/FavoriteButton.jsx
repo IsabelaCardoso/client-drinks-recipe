@@ -37,14 +37,16 @@ function FavoriteButon({ drinkId }) {
 
   return (
     <button
+      className="button is-white"
       data-testid="favorite-button"
       type="button" onClick={ () => handleFavorite() }
     >
-      <img
+      {favorite ? <ion-icon size="large" name="heart"></ion-icon> :<ion-icon size="large" name="heart-outline"></ion-icon> }
+      {/* <img
         className="search-icon"
         src={ favorite ? filledHeard : emptyHeard }
         alt={ favorite ? 'filled-heart-symbol' : 'empty-heart-symbol' }
-      />
+      /> */}
     </button>
   );
 }

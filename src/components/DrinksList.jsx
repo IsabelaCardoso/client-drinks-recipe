@@ -23,17 +23,16 @@ function DrinksList() {
     .then(() => setLoading(false));
   }, []);
 
-  if (loading) return <div>Carregando seus drinks...</div>;
+  if (loading) return <div>Loading your drinks...</div>;
   return (
     <div>
-      <div className="container is-flex is-justify-content-flex-end">
-        <div className="notification">
+      <div className="is-flex is-justify-content-flex-end">
           <span hidden={!oneWordHidden} className="notification is-warning">
             <button
               onClick={() => setOneWordHidden(false)}
               className="delete"
             ></button>
-            Sua busca deve conter apenas uma letra.
+            Your search must contain only one letter.
           </span>
 
           <span hidden={!noRecipesMessage} className="notification is-warning">
@@ -41,20 +40,18 @@ function DrinksList() {
               onClick={() => setNoRecipesMessage(!noRecipesMessage)}
               className="delete"
             ></button>
-            Desculpe, não encontramos nenhuma receita para o filtro selecionado.
-            Tente novamente.
+            Sorry, we couldn't find any recipes for the selected filter. Try again.
           </span>
           <span hidden={!categoryRequired} className="notification is-warning">
             <button
               onClick={() => setCategoryRequired(!categoryRequired)}
               className="delete"
             ></button>
-            Por favor escolha uma categoria.
+            Please choose a category.
           </span>
-        </div>
       </div>
       <div className="container is-flex">
-        <div className="notification">
+        <div>
           <div className="drinks-card-container is-justify-content-center">
             {!noRecipesMessage &&
               recipes.drinks.map((recipe) => {
