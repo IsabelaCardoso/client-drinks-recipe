@@ -5,7 +5,7 @@ import DrinksContext from "./Context";
 function DrinksProvider({ children }) {
   const [recipes, setRecipes] = useState();
   const [test, setTest] = useState();
-  const [noRecipes, setNoRecipes] = useState(false);
+  const [noRecipesMessage, setNoRecipesMessage] = useState(false);
   const [oneWordHidden, setOneWordHidden] = useState(false);
   const [invalidNameHidden, setInvalidNameHidden] = useState(false);
   const [categoryRequired, setCategoryRequired] = useState(false);
@@ -15,8 +15,8 @@ function DrinksProvider({ children }) {
     setRecipes,
     test,
     setTest,
-    noRecipes,
-    setNoRecipes,
+    noRecipesMessage,
+    setNoRecipesMessage,
     oneWordHidden,
     setOneWordHidden,
     invalidNameHidden,

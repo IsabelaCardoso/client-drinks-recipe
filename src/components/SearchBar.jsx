@@ -8,30 +8,34 @@ function SearchBar() {
   const [inputValues, setInputValues] = useState({});
   const [inputText, setInputText] = useState("");
   const [radioType, setRadioType] = useState("");
-  const { recipes, noRecipes, setNoRecipes, setCategoryRequired } =
+  const { recipes, setRecipes, setNoRecipesMessage, noRecipesMessage, setCategoryRequired } =
     useContext(DrinksContext);
 
   useEffect(() => {
     const textingTimer = setTimeout(
-      async () => await searchFetch(inputValues),
-      3000
-    );
+      async () => {
+        const results = await searchFetch(inputValues)
+        if(results !== undefined) setRecipes(results);
+      }, 3000);
     return () => clearTimeout(textingTimer);
   }, [inputValues]);
 
   useEffect(() => {
-    setNoRecipes(false);
+    setNoRecipesMessage(false);
   }, [recipes]);
 
   const handleChange = (search) => {
     if (!radioType && search.type !== "radio") return setCategoryRequired(true);
     setInputValues({ search, type: radioType });
-    if (!recipes && radioType && inputText) return setNoRecipes(!noRecipes);
+    if (!recipes && radioType && inputText) return setNoRecipesMessage(!noRecipesMessage);
   };
 
   return (
     <>
-      <form className="is-flex">
+      <form
+        data-testid="search-form"
+        className="is-flex"
+      >
         <div className="field">
           <div className="control">
             <input
@@ -48,7 +52,7 @@ function SearchBar() {
               id="first-letter"
               type="radio"
             />
-            Primeira Letra
+            First Letter
           </label>
           <label className="radio">
             <input
@@ -57,7 +61,7 @@ function SearchBar() {
               id="name"
               type="radio"
             />
-            Nome
+            Name
           </label>
         </div>
       </form>

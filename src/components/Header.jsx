@@ -3,7 +3,6 @@ import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import DrinksContext from "../context/Context";
 import ShareButton from "./ShareButton";
-import logoDrinks from "../images/logo-drinks.png";
 import Titles from "./Titles";
 
 function Header({ subtitle }) {
@@ -13,29 +12,24 @@ function Header({ subtitle }) {
   return (
     <div>
       <Titles subtitle={subtitle} />
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <div class="navbar-item">
-            <img src={logoDrinks} alt="" />
-          </div>
-        </div>
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <p class="navbar-item">
-              <Link to="/">Página Principal</Link>
+      <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div id="navbarBasicExample" className="navbar-menu">
+          <div className="navbar-start">
+            <p className="navbar-item">
+              <Link to="/">Home</Link>
             </p>
-            <p class="navbar-item">
-              <Link to="/favorite">Drinks favoritos</Link>
+            <p className="navbar-item">
+              <Link to="/favorite">Favorite Drinks</Link>
             </p>
           </div>
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <div className="buttons">
                 <button
                   onClick={() => setSearchBar(!searchBar)}
-                  class="button is-primary"
+                  className="button is-primary"
                 >
-                  <strong>Pesquisar</strong>
+                  <strong>Search</strong>
                 </button>
                 {searchBar && <SearchBar />}
               </div>

@@ -4,9 +4,9 @@ import Header from "../components/Header";
 
 function HomePage() {
   return (
-    <div class="container is-fluid">
-      <Header subtitle="Página Principal" />
-      <div class="notification">
+    <div className="container is-fluid">
+      <Header subtitle="Home Page" />
+      <div className="notification">
         <DrinksList />
       </div>
     </div>

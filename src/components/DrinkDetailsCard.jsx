@@ -77,7 +77,7 @@ function DrinkDetailsCard() {
         </div>
       </div>
       <div>
-        <FavoriteButton />
+        <FavoriteButton drinkId={ idDrink } />
         <ShareButton />
       </div>
     </div>

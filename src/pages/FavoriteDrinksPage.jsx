@@ -9,25 +9,31 @@ import Titles from "../components/Titles";
 function FavoriteDrinksPage() {
   const [loading, setLoading] = useState(true);
   const { getAllById } = useFetch();
-  const { recipes } = useContext(DrinksContext);
+  const { recipes, setRecipes } = useContext(DrinksContext);
   const [noFavorites, setNoFavorites] = useState(false);
 
   useEffect(() => {
-    loadPage().then(() => setLoading(false));
+    getLocalStorage()
+    .then(async (objectList) => await getDrinksById(objectList))
+    .then(() => setLoading(false));
   }, []);
 
-  const loadPage = async () => {
+  const getLocalStorage = async () => {
     const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
-    console.log("obgeee", objectList);
-    if (objectList === [] || objectList === null) setNoFavorites(true);
-    await getAllById(objectList);
+    if (objectList === [] || objectList === null) return setNoFavorites(true);
+    return objectList;
   };
+  
+  const getDrinksById = async (objectList) => {
+    const result = await getAllById(objectList);
+    setRecipes(result)
+  }
 
   if (loading) return <div>Loading your favorite recipes...</div>;
 
   return (
     <>
-      <Titles subtitle="Favoritos" />
+      <Titles subtitle="Favorites" />
       <Link to="/">
         <img
           className="arrow-icon"
@@ -44,6 +50,7 @@ function FavoriteDrinksPage() {
                 const drink = recipe.drinks[0];
                 return (
                   <DrinksCard
+                    origin="favorite-page"
                     key={drink.idDrink}
                     name={drink.strDrink}
                     thumb={drink.strDrinkThumb}
@@ -55,7 +62,7 @@ function FavoriteDrinksPage() {
           </div>
         </div>
       </div>
-      <span hidden={!noFavorites} class="notification is-warning">
+      <span hidden={!noFavorites} className="notification is-warning">
         Looks like you don't have any favorite drinks yet
       </span>
     </>

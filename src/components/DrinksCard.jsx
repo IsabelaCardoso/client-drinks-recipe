@@ -1,25 +1,27 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import FavoriteButon from "./FavoriteButton";
 
-function DrinksCard({ name, thumb, id, favorite }) {
+function DrinksCard({ origin, name, thumb, id, favorite }) {
   return (
     <div className="card">
-      <Link className="link" to={`/details/${id}`}>
+      <Link data-testid={ name } className="link" to={`/details/${id}`}>
         <div className="card-image">
           <figure className="image">
             <img
               className="drink-thumb"
-              src={thumb}
-              alt={`Drink called ${name}`}
+              src={ thumb }
+              alt={`Drink called ${ name }`}
             />
           </figure>
         </div>
         <div className="media">
           <div className="media-content">
-            <p className="title test is-4">{name}</p>
+            <p className="title test is-4">{ name }</p>
           </div>
         </div>
       </Link>
+      {(origin === 'favorite-page') && <FavoriteButon drinkId={ id } />}
     </div>
   );
 }

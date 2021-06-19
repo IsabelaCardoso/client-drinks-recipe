@@ -3,13 +3,12 @@ import DrinksContext from "../context/Context";
 import emptyHeard from "../images/empty-heart.png";
 import filledHeard from "../images/filled-heart.png";
 
-function FavoriteButon() {
+function FavoriteButon({ drinkId }) {
   const { recipes } = useContext(DrinksContext);
   const [favorite, setFavorite] = useState();
 
   const isFavorite = () => {
     if (recipes) {
-      const drinkId = recipes.drinks[0].idDrink;
       const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
       if (objectList === null) {
         const favoriteDrinks = [];
@@ -26,27 +25,25 @@ function FavoriteButon() {
   }, [recipes]);
 
   const handleFavorite = () => {
-    const drinkId = recipes.drinks[0].idDrink;
-    if (favorite === true) {
-      const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
-      const newList = objectList.filter((item) => item.id !== drinkId);
-      localStorage.setItem("favoriteDrinks", JSON.stringify(newList));
-      setFavorite(false);
-    }
-    if (favorite === false) {
-      const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
-      const newList = [...objectList, { id: drinkId }];
-      localStorage.setItem("favoriteDrinks", JSON.stringify(newList));
-      setFavorite(true);
-    }
+    const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
+
+    const newList = favorite 
+      ? objectList.filter((item) => item.id !== drinkId)
+      : [...objectList, { id: drinkId }]
+
+    localStorage.setItem("favoriteDrinks", JSON.stringify(newList));
+    setFavorite(!favorite);
   };
 
   return (
-    <button type="button" onClick={() => handleFavorite()}>
+    <button
+      data-testid="favorite-button"
+      type="button" onClick={ () => handleFavorite() }
+    >
       <img
         className="search-icon"
-        src={favorite ? filledHeard : emptyHeard}
-        alt=""
+        src={ favorite ? filledHeard : emptyHeard }
+        alt={ favorite ? 'filled-heart-symbol' : 'empty-heart-symbol' }
       />
     </button>
   );

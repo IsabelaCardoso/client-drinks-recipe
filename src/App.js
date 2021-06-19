@@ -8,13 +8,13 @@ import './App.css'
 function App() {
   return (
     <div>
-      <DrinksProvider>
+      {/* <DrinksProvider> */}
         <Switch>
           <Route exact path="/" component={ HomePage }/>
           <Route path="/details/:id" component={ DetailsPage } />
           <Route path="/favorite" component={ FavoriteDrinksPage } />
         </Switch>
-      </DrinksProvider>
+      {/* </DrinksProvider> */}
     </div>
   );
 }

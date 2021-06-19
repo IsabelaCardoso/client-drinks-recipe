@@ -2,7 +2,7 @@ import { useContext } from "react";
 import DrinksContext from "../context/Context";
 
 function useFetch() {
-  const { setRecipes, setNoRecipes, setOneWordHidden, setInvalidNameHidden } =
+  const { setRecipes, setNoRecipesMessage, setOneWordHidden, setInvalidNameHidden } =
     useContext(DrinksContext);
 
   const randomDrinksFetch = async () => {
@@ -11,29 +11,29 @@ function useFetch() {
     )
       .then((response) => response.json())
       .then((result) => result.drinks.slice(0, 18));
-    return setRecipes({ drinks: results });
+    return ({ drinks: results })
   };
 
   const searchFetch = async (inputValues) => {
     const { search, type } = inputValues;
     if (type === "first-letter" && search.length > 1) {
-      setOneWordHidden(true);
+      return setOneWordHidden(true);
     }
-    if (type === "name" && search.length > 1) {
-      setInvalidNameHidden(true);
+    if (type === "name" && search.length === 1) {
+      return setInvalidNameHidden(true);
     }
     if (type === "name" && search.length > 1) {
       const results = await fetch(
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`
       ).then((response) => response.json());
-      if (results.drinks === null) return setNoRecipes(true);
-      return setRecipes(results);
+      if (results.drinks === null) return setNoRecipesMessage(true);
+      return results;
     }
     if (type === "first-letter" && search.length === 1) {
       const results = await fetch(
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`
       ).then((response) => response.json());
-      return setRecipes(results);
+      return results;
     }
   };
 
@@ -49,10 +49,10 @@ function useFetch() {
       (drink) =>
         `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink.id}`
     );
-    Promise.all(
+    const results = Promise.all(
       urls.map((url) => fetch(url).then((response) => response.json()))
-    ).then((result) => setRecipes(result));
-    return null;
+    ).then((result) => result);
+    return results;
   };
 
   return {
