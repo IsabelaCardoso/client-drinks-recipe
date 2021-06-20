@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import shareIcon from "../images/shareIcon.png";
 
 function ShareButton() {
   const [copied, setCopied] = useState(true);
@@ -14,7 +13,7 @@ function ShareButton() {
   return (
     <>
       <button
-        class="button is-white"
+        className="button is-white"
         data-testid="share-button"      
         type="button"
         onClick={(e) => clipBoard(e)}

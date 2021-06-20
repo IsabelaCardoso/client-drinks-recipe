@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 function BackArrow() {
   return (
     <Link to='/'>
       <button
-        class="button is-white"
+        className="button is-white"
         data-testid="share-button"      
         type="button"
       >
