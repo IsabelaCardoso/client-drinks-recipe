@@ -5,10 +5,38 @@ function useFetch() {
   const { setNoRecipesMessage, setOneWordHidden, setInvalidNameHidden } =
     useContext(DrinksContext);
 
-  const randomDrinksFetch = async () => {
-    const results = await fetch(
-      "https://www.thecocktaildb.com/api/json/v1/1/search.php?s="
-    )
+  const informationType = 'application/json';
+  const methods = {
+    post: 'POST',
+    get: 'GET',
+    put: 'PUT',
+  };
+
+  const submitLogin = async(email, password) => {
+    console.log('cheguei aqui');
+    console.log('email', email, 'password', password)
+    const result = await fetch('http://localhost:3001/login', {
+      method: methods.post,
+      headers: {
+        Accept: informationType,
+        'Content-Type': informationType,
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    console.log('result', result);
+    const data = await result.json();
+    return data;
+  }
+
+  const randomDrinksFetch = async (token) => {
+    const results = await fetch('http://localhost:3001/drink', {
+      method: 'GET',
+      headers: {
+        Accept: informationType,
+        'Content-Type': informationType,
+        Authorization: token,
+      },
+    })
       .then((response) => response.json())
       .then((result) => result.drinks.slice(0, 18));
     return ({ drinks: results });
@@ -55,6 +83,7 @@ function useFetch() {
   };
 
   return {
+    submitLogin,
     searchFetch,
     randomDrinksFetch,
     drinkDetailsFetch,
