@@ -28,21 +28,21 @@ function useFetch() {
     return data;
   }
 
-  const randomDrinksFetch = async (token) => {
+  const randomDrinksFetch = async () => {
     const results = await fetch('http://localhost:3001/drink', {
       method: 'GET',
       headers: {
         Accept: informationType,
         'Content-Type': informationType,
-        Authorization: token,
       },
     })
       .then((response) => response.json())
-      .then((result) => result.drinks.slice(0, 18));
+      .then((result) => result);
     return ({ drinks: results });
   };
 
-  const searchFetch = async (inputValues) => {
+  const searchFetch = async (inputValues, token) => {
+    console.log('token', token);
     const { search, type } = inputValues;
     if (type === "first-letter" && search.length > 1) {
       return setOneWordHidden(true);
@@ -51,10 +51,16 @@ function useFetch() {
       return setInvalidNameHidden(true);
     }
     if (type === "name" && search.length > 1) {
-      const results = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`
-      ).then((response) => response.json());
+      const results = await fetch(`http://localhost:3001/drink/name/${search}`, {
+      method: 'GET',
+      headers: {
+        Accept: informationType,
+        'Content-Type': informationType,
+        Authorization: token,
+      },
+    }).then((response) => response.json());
       if (results.drinks === null) return setNoRecipesMessage(true);
+      console.log('result', results);
       return results;
     }
     if (type === "first-letter" && search.length === 1) {

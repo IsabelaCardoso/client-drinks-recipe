@@ -19,6 +19,7 @@ function DrinksList() {
 
   useEffect(() => {
     randomDrinksFetch()
+    // .then((result) => console.log('drinksList result', result))
     .then((result) => setRecipes(result))
     .then(() => setLoading(false));
   }, []);

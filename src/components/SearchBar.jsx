@@ -11,10 +11,16 @@ function SearchBar() {
   const { recipes, setRecipes, setNoRecipesMessage, noRecipesMessage, setCategoryRequired } =
     useContext(DrinksContext);
 
+  const getToken = () => {
+    const token = JSON.parse(localStorage.getItem('user'));
+    return token;
+  }
+
   useEffect(() => {
     const textingTimer = setTimeout(
       async () => {
-        const results = await searchFetch(inputValues)
+        const token = getToken()
+        const results = await searchFetch(inputValues, token.token)
         if(results !== undefined) setRecipes(results);
       }, 3000);
     return () => clearTimeout(textingTimer);

@@ -8,7 +8,8 @@ function Form({ history }) {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userAlreadyRegistered, setUserAlreadyRegistered] = useState(true);
+  const [spanMessage, setSpanMessage] = useState(true);
+  const [responseMessage, setResponseMessage] = useState(true);
 
   // const [checkbox, setCheckbox] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -49,8 +50,12 @@ function Form({ history }) {
   }, [firstName, lastName, email, password]);
   
   const handleToken = (result) => {
-    if (result.message) return setUserAlreadyRegistered(!userAlreadyRegistered);
-    localStorage.setItem('user', JSON.stringify({ token: result }));
+    console.log('result', result);
+    if (result.message) {
+      setResponseMessage(result.message)
+      return setSpanMessage(!spanMessage);
+    } 
+    localStorage.setItem('user', JSON.stringify({ token: result.token }));
     return history.push('/');
   };
 
@@ -125,7 +130,7 @@ function Form({ history }) {
           Register
         </button>
       )}
-      <span hidden={ userAlreadyRegistered }>User already registered</span>
+      <span hidden={ spanMessage }>{ responseMessage }</span>
     </div>
   );
 }
