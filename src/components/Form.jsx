@@ -6,14 +6,10 @@ function Form({ history }) {
   const { submitLogin, submitRegister } = useFetch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [spanMessage, setSpanMessage] = useState(true);
   const [responseMessage, setResponseMessage] = useState(true);
-
-  // const [checkbox, setCheckbox] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  // const [emailAlreadyExist, setEmailAlreadyExist] = useState(false);
 
   const originPath = history.location.pathname;
 
@@ -28,7 +24,7 @@ function Form({ history }) {
     return password.length >= minPasswordLength;
   };
 
-  const validateRegisterFullName = (firstName, lastName) => {
+  const validateFullName = (firstName, lastName) => {
     if (originPath === '/login') return true;
     const schema = Joi.object({
       firstName: Joi.string().min(2),
@@ -38,15 +34,15 @@ function Form({ history }) {
   };
 
   const handleValidInputs = () => {
-    validateRegisterFullName(firstName, lastName);
+    validateFullName(fullName);
     validateEmail(email);
     validatePassword(password);
-    setDisabled(!(!validateRegisterFullName.error && validateEmail && validatePassword))
+    setDisabled(!(!validateFullName.error && validateEmail && validatePassword))
   }
 
   useEffect(() => {
     handleValidInputs()
-  }, [firstName, lastName, email, password]);
+  }, [fullName, email, password]);
   
   const handleToken = (result) => {
     if (result.message) {
@@ -59,7 +55,7 @@ function Form({ history }) {
 
   const handleSubmit = () => {
     if (originPath === '/login') return submitLogin(email, password).then((result) => handleToken(result));
-    const data = { firstName, lastName, password, email }
+    const data = { fullName, password, email }
     return submitRegister(data).then((result) => handleToken(result));
   };
 
@@ -67,34 +63,20 @@ function Form({ history }) {
     <div>
       <form>
         { originPath === '/register' && (
-          <div>
             <label htmlFor="name">
-              First Name
+              FullName
               <input
-                type="name"
                 name="name"
-                value={ firstName }
+                value={ fullName }
                 data-testid="signup-name"
-                onChange={ ({ target }) => setFirstName(target.value) }
+                onChange={ ({ target }) => setFullName(target.value) }
                 />
             </label>
-            <label htmlFor="name">
-              Last Name
-            <input
-              type="name"
-              name="name"
-              value={ lastName }
-              data-testid="signup-name"
-              onChange={ ({ target }) => setLastName(target.value) }
-              />
-            </label>
-          </div>
         )}
         <label htmlFor="email">
           Email
           <input
-            type="email"
-            data-testid={ originPath === '/register' ? 'signup-email' : 'email-input' }
+            data-testid={ originPath === '/register' ? 'signup-email' : 'login-email' }
             value={ email }
             name="email"
             onChange={ ({ target }) => setEmail(target.value) }
@@ -106,14 +88,14 @@ function Form({ history }) {
             type="password"
             name="password"
             value={ password }
-            data-testid={ originPath === '/register' ? 'signup-password' : 'password-input' }
+            data-testid={ originPath === '/register' ? 'signup-password' : 'login-password' }
             onChange={ ({ target }) => setPassword(target.value) }
           />
         </label>
       </form>
       <button
         type="button"
-        data-testid={ originPath === '/register' ? 'signup-btn' : 'signin-btn' }
+        data-testid={ originPath === '/register' ? 'signup-btn' : 'login-btn' }
         disabled={ disabled }
         onClick={ () => handleSubmit() }
       >

@@ -25,6 +25,19 @@ function useFetch() {
     return data;
   }
 
+  const submitRegister = async({ fullName, email, password }) => {
+    const result = await fetch('http://localhost:3001/register', {
+      method: methods.post,
+      headers: {
+        Accept: informationType,
+        'Content-Type': informationType,
+      },
+      body: JSON.stringify({ fullName, email, password }),
+    });
+    const data = await result.json();
+    return data;
+  }
+
   const randomDrinksFetch = async () => {
     const results = await fetch('http://localhost:3001/drink', {
       method: 'GET',
@@ -107,6 +120,7 @@ function useFetch() {
 
   return {
     submitLogin,
+    submitRegister,
     searchFetch,
     randomDrinksFetch,
     drinkDetailsFetch,
