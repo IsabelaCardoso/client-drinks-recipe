@@ -100,8 +100,7 @@ function useFetch() {
         },
       })
     .then((response) => response.json());
-    console.log('result detailsfetch', results);
-    return results;
+    return results[0];
   };
 
   const getAllById = async (idsList) => {

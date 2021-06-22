@@ -19,45 +19,18 @@ function DrinkDetailsCard() {
     .then(() => setLoading(false));
   }, []);
 
-
-  const handleIngredients = () => {
-    if (recipes && !recipes[0]) {
-      const arrayDrinksInfos = Object.entries(recipes.drinks[0]);
-      const ingredients = arrayDrinksInfos.filter(
-        (row) =>
-          row[0].toLowerCase().includes("stringredient") &&
-          row[1] !== null &&
-          row[1] !== ""
-      );
-
-      const allMeasures = arrayDrinksInfos.filter((row) =>
-        row[0].toLowerCase().includes("strmeasure")
-      );
-      const measures = allMeasures.slice(0, ingredients.length);
-      setIngredients(ingredients);
-      setMeasures(measures);
-    }
-  };
-
-  useEffect(() => {
-    handleIngredients();
-  }, [recipes]);
-
   if (loading) return <div>Loading the recipe...</div>;
-  const drink = recipes.drinks[0];
-
+  console.log('rec', recipes.ingredients)
   return (
     <div className="box">
       <div>
-        <h1 className="title">{drink.strDrink}</h1>
+        <h1 className="title">{recipes.name}</h1>
       </div>
-      {drink.strAlcoholic 
-        ? <p data-testid="drink-alcoholic-or-not">{drink.strAlcoholic}</p>
-        : <p data-testid="drink-alcoholic-or-not">Non-alcoholic</p>}
+      <p>{recipes.category}</p>
       <img
         className="drink-thumb-details"
-        src={drink.strDrinkThumb}
-        alt={drink.strDrink}
+        src={recipes.image}
+        alt={recipes.name}
       />
       <div className="is-flex">
         <ul className="card">
@@ -65,9 +38,9 @@ function DrinkDetailsCard() {
             <strong>Ingredients</strong>
           </h5>
           <br />
-          {ingredients.map((ingredient, index) => {
-            if (measures[index][1] === null) return <li key={ingredient}>{`${ingredient[1]}`}</li>;
-            return <li key={ingredient}>{`${ingredient[1]} - ${measures[index][1]}`}</li>;
+          {recipes.ingredients.map((item) => {
+            if (item.measure === ' ') return <li key={ item.ingredient }>{ item.ingredient }</li>;
+            return <li key={ item.ingredient }>{ `${ item.ingredient } - ${ item.measure }` }</li>;
           })}
         </ul>
         <div className="is-flex">
@@ -76,7 +49,7 @@ function DrinkDetailsCard() {
               <strong>Instructions</strong>
             </h5>
             <br />
-            <p>{drink.strInstructions}</p>
+            <p>{recipes.instructions}</p>
           </div>
         </div>
       </div>
