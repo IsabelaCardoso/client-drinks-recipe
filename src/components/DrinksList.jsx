@@ -26,9 +26,6 @@ function DrinksList() {
   console.log('recipes drinkslist', recipes)
   if (loading) return <div>Loading your drinks...</div>;
 
-  const json = JSON.stringify(objRecipes);
-  console.log('test json', JSON.parse(json));
-
   return (
     <div>
       <div className="is-flex is-justify-content-flex-end">
@@ -59,13 +56,13 @@ function DrinksList() {
         <div>
           <div className="drinks-card-container is-justify-content-center">
             {!noRecipesMessage &&
-              recipes.drinks.map((recipe) => {
+              recipes.map((recipe) => {
                 return (
                   <DrinksCard
                     origin="home-page"
                     key={recipe.id}
-                    name={recipe.strDrink}
-                    thumb={recipe.strDrinkThumb}
+                    name={recipe.name}
+                    thumb={recipe.image}
                     id={recipe.id}
                   />
                 );

@@ -48,7 +48,8 @@ function useFetch() {
     })
       .then((response) => response.json())
       .then((result) => result);
-    return ({ drinks: results });
+    console.log('results', results);
+    return results;
   };
 
   const searchFetch = async (inputValues, token) => {
