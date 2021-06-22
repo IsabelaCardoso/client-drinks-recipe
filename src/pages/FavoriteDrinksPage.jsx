@@ -22,7 +22,7 @@ function FavoriteDrinksPage() {
 
   const getLocalStorage = () => {
     const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
-    if (objectList === [] || objectList === null) return setNoFavorites(true);
+    if (objectList.length === 0 || objectList === null) setNoFavorites(true);
     return objectList;
   };
 
@@ -48,9 +48,9 @@ function FavoriteDrinksPage() {
           </div>
         </div>
       </div>
-      <span hidden={!noFavorites} className="notification is-warning">
+      <p hidden={!noFavorites} className="notification is-warning">
         Looks like you don't have any favorite drinks yet
-      </span>
+      </p>
     </>
   );
 }
