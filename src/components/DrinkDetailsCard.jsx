@@ -19,6 +19,7 @@ function DrinkDetailsCard() {
     .then(() => setLoading(false));
   }, []);
 
+
   const handleIngredients = () => {
     if (recipes && !recipes[0]) {
       const arrayDrinksInfos = Object.entries(recipes.drinks[0]);

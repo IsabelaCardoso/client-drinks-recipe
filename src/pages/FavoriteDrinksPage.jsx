@@ -7,24 +7,28 @@ import BackToHomeArrow from "../components/BackToHomeArrow";
 
 function FavoriteDrinksPage() {
   const [loading, setLoading] = useState(true);
-  const { getAllById } = useFetch();
+  const { getAllById, getToken } = useFetch();
   const { recipes, setRecipes } = useContext(DrinksContext);
   const [noFavorites, setNoFavorites] = useState(false);
 
   useEffect(() => {
-    getLocalStorage()
-    .then(async (objectList) => await getDrinksById(objectList))
-    .then(() => setLoading(false));
+    const objectList = getLocalStorage()
+    const token = getToken();
+    if (objectList && token) {
+      getDrinksById(objectList, token)
+        .then(() => setLoading(false));
+    }
   }, []);
 
-  const getLocalStorage = async () => {
+  const getLocalStorage = () => {
+    getToken()
     const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
     if (objectList === [] || objectList === null) return setNoFavorites(true);
     return objectList;
   };
   
-  const getDrinksById = async (objectList) => {
-    const result = await getAllById(objectList);
+  const getDrinksById = async (objectList, token) => {
+    const result = await getAllById(objectList, token);
     setRecipes(result)
   }
 
@@ -44,10 +48,10 @@ function FavoriteDrinksPage() {
                 return (
                   <DrinksCard
                     origin="favorite-page"
-                    key={drink.idDrink}
+                    key={drink.id}
                     name={drink.strDrink}
                     thumb={drink.strDrinkThumb}
-                    id={drink.idDrink}
+                    id={drink.id}
                     type="favorite"
                   />
                 );

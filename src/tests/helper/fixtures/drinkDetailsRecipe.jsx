@@ -2,7 +2,7 @@ const drink =
 {
   "drinks": [
     {
-      "idDrink": "15997",
+      "id": "15997",
       "strDrink": "GG",
       "strDrinkAlternate": null,
       "strTags": null,

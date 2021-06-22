@@ -24,7 +24,7 @@ describe('Tests the DetailsPage elements', () => {
     const { findByText } = renderWithRouter(<Provider><DetailsPage /></Provider>);
     jest.fn().mockReturnValue(drink);
     const idInTheUrl = window.location.href.split("details/")[1];
-    const idInTheDrinkLoaded = drink.drinks[0].idDrink;
+    const idInTheDrinkLoaded = drink.drinks[0].id;
     const titleDrinkGG = await findByText('GG');
     expect(idInTheUrl).toEqual(idInTheDrinkLoaded);
     expect(titleDrinkGG).toBeInTheDocument();

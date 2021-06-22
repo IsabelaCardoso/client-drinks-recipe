@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import DrinksContext from "../context/Context";
 import ShareButton from "./ShareButton";
 import Titles from "./Titles";
+import useFetch from "../services/useFetch";
 
 function Header({ subtitle }) {
   const [searchBar, setSearchBar] = useState(false);
   const { setRecipes } = useContext(DrinksContext);
+  const { randomDrinksFetch } = useFetch();
 
   return (
     <div>
@@ -16,10 +18,18 @@ function Header({ subtitle }) {
         <div className="navbar-menu has-background-grey-darker">
           <div className="navbar-start">
             <p className="navbar-item">
-              <Link to="/">Home</Link>
+              <Link to="/" onClick={() => randomDrinksFetch()}>Home</Link>
             </p>
             <p className="navbar-item">
               <Link to="/favorite">Favorite Drinks</Link>
+            </p>
+          </div>
+          <div className="navbar-end">
+            <p className="navbar-item">
+              <Link to="/login" >Login</Link>
+            </p>
+            <p className="navbar-item">
+              <Link to="/register" >Register</Link>
             </p>
           </div>
           </div>

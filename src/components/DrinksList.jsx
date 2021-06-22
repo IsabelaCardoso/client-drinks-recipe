@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import DrinksContext from "../context/Context";
 import useFetch from "../services/useFetch";
 import DrinksCard from "./DrinksCard";
+import objRecipes from '..//tests/helper/fixtures/recipes';
 
 function DrinksList() {
   const [loading, setLoading] = useState(true);
@@ -19,12 +20,15 @@ function DrinksList() {
 
   useEffect(() => {
     randomDrinksFetch()
-    // .then((result) => console.log('drinksList result', result))
     .then((result) => setRecipes(result))
     .then(() => setLoading(false));
   }, []);
-
+  console.log('recipes drinkslist', recipes)
   if (loading) return <div>Loading your drinks...</div>;
+
+  const json = JSON.stringify(objRecipes);
+  console.log('test json', JSON.parse(json));
+
   return (
     <div>
       <div className="is-flex is-justify-content-flex-end">
@@ -59,10 +63,10 @@ function DrinksList() {
                 return (
                   <DrinksCard
                     origin="home-page"
-                    key={recipe.idDrink}
+                    key={recipe.id}
                     name={recipe.strDrink}
                     thumb={recipe.strDrinkThumb}
-                    id={recipe.idDrink}
+                    id={recipe.id}
                   />
                 );
               })}

@@ -24,7 +24,6 @@ function Form({ history }) {
   };
 
   const validatePassword = (password) => {
-    console.log(password)
     const minPasswordLength = 6;
     return password.length >= minPasswordLength;
   };
@@ -50,7 +49,6 @@ function Form({ history }) {
   }, [firstName, lastName, email, password]);
   
   const handleToken = (result) => {
-    console.log('result', result);
     if (result.message) {
       setResponseMessage(result.message)
       return setSpanMessage(!spanMessage);

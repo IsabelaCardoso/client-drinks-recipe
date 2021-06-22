@@ -2,7 +2,7 @@ import { useContext } from "react";
 import DrinksContext from "../context/Context";
 
 function useFetch() {
-  const { setNoRecipesMessage, setOneWordHidden, setInvalidNameHidden } =
+  const { noRecipesMessage, setNoRecipesMessage, setOneWordHidden, setInvalidNameHidden } =
     useContext(DrinksContext);
 
   const informationType = 'application/json';
@@ -13,8 +13,6 @@ function useFetch() {
   };
 
   const submitLogin = async(email, password) => {
-    console.log('cheguei aqui');
-    console.log('email', email, 'password', password)
     const result = await fetch('http://localhost:3001/login', {
       method: methods.post,
       headers: {
@@ -23,7 +21,6 @@ function useFetch() {
       },
       body: JSON.stringify({ email, password }),
     });
-    console.log('result', result);
     const data = await result.json();
     return data;
   }
@@ -42,7 +39,6 @@ function useFetch() {
   };
 
   const searchFetch = async (inputValues, token) => {
-    console.log('token', token);
     const { search, type } = inputValues;
     if (type === "first-letter" && search.length > 1) {
       return setOneWordHidden(true);
@@ -59,34 +55,55 @@ function useFetch() {
         Authorization: token,
       },
     }).then((response) => response.json());
-      if (results.drinks === null) return setNoRecipesMessage(true);
-      console.log('result', results);
+      if (results.drinks === []) return setNoRecipesMessage(!noRecipesMessage);
       return results;
     }
     if (type === "first-letter" && search.length === 1) {
-      const results = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${search}`
-      ).then((response) => response.json());
+
+      const results = await fetch(`http://localhost:3001/drink/${search}`, {
+        method: 'GET',
+        headers: {
+          Accept: informationType,
+          'Content-Type': informationType,
+          Authorization: token,
+        },
+      }).then((response) => response.json());
       return results;
     }
   };
 
   const drinkDetailsFetch = async (id) => {
-    const results = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-      .then((response) => response.json()).then((result) => result);
+    // const token = getToken()
+    console.log('entrei no detailsfetch');
+    console.log('id', id);
+    // console.log('token', token);
+    const results = await fetch(`http://localhost:3001/drink/id/${id}`, {
+        method: 'GET',
+        headers: {
+          Accept: informationType,
+          'Content-Type': informationType,
+          // Authorization: token,
+        },
+      })
+    .then((response) => response.json());
+    console.log('result detailsfetch', results);
     return results;
   };
 
   const getAllById = async (idsList) => {
     const urls = idsList.map(
-      (drink) =>
-        `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drink.id}`
-    );
+      (drink) => `http://localhost:3001/drink/id/${drink.id}`);
     const results = Promise.all(
       urls.map((url) => fetch(url).then((response) => response.json()))
     ).then((result) => result);
     return results;
   };
+
+  const getToken = () => {
+    const token = JSON.parse(localStorage.getItem('user'));
+    if (!token || !token.token) alert('Token inválido ou expirado');
+    return token;
+  }
 
   return {
     submitLogin,
@@ -94,6 +111,7 @@ function useFetch() {
     randomDrinksFetch,
     drinkDetailsFetch,
     getAllById,
+    getToken,
   };
 }
 

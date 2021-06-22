@@ -1,7 +1,7 @@
 const recipes = {
   "drinks": [
     {
-      "idDrink": "15997",
+      "id": "15997",
       "strDrink": "GG",
       "strDrinkAlternate": null,
       "strTags": null,
@@ -54,7 +54,7 @@ const recipes = {
       "dateModified": "2016-07-18 22:06:00"
     },
     {
-      "idDrink": "17222",
+      "id": "17222",
       "strDrink": "A1",
       "strDrinkAlternate": null,
       "strTags": null,
@@ -107,7 +107,7 @@ const recipes = {
       "dateModified": "2017-09-07 21:42:09"
     },
     {
-      "idDrink": "13501",
+      "id": "13501",
       "strDrink": "ABC",
       "strDrinkAlternate": null,
       "strTags": null,
@@ -160,7 +160,7 @@ const recipes = {
       "dateModified": "2016-08-31 19:32:08"
     },
     {
-      "idDrink": "17203",
+      "id": "17203",
       "strDrink": "Kir",
       "strDrinkAlternate": null,
       "strTags": "IBA,ContemporaryClassic",
@@ -213,7 +213,7 @@ const recipes = {
       "dateModified": "2017-09-02 17:38:14"
     },
     {
-      "idDrink": "14229",
+      "id": "14229",
       "strDrink": "747",
       "strDrinkAlternate": null,
       "strTags": null,
