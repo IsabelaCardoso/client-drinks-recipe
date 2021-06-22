@@ -8,8 +8,6 @@ function DrinkDetailsCard() {
   const { drinkDetailsFetch } = useFetch();
   const { recipes, setRecipes } = useContext(DrinksContext);
   const [loading, setLoading] = useState(true);
-  const [measures, setMeasures] = useState();
-  const [ingredients, setIngredients] = useState();
 
   const idDrink = window.location.href.split("details/")[1];
 
@@ -20,7 +18,7 @@ function DrinkDetailsCard() {
   }, []);
 
   if (loading) return <div>Loading the recipe...</div>;
-  console.log('rec', recipes.ingredients)
+
   return (
     <div className="box">
       <div>
@@ -39,7 +37,7 @@ function DrinkDetailsCard() {
           </h5>
           <br />
           {recipes.ingredients.map((item) => {
-            if (item.measure === ' ') return <li key={ item.ingredient }>{ item.ingredient }</li>;
+            if (item.measure === null) return <li key={ item.ingredient }>{ item.ingredient }</li>;
             return <li key={ item.ingredient }>{ `${ item.ingredient } - ${ item.measure }` }</li>;
           })}
         </ul>
@@ -54,7 +52,7 @@ function DrinkDetailsCard() {
         </div>
       </div>
       <div>
-        <FavoriteButton drinkId={ idDrink } />
+        <FavoriteButton drinkId={ parseInt(idDrink) } />
         <ShareButton />
       </div>
     </div>

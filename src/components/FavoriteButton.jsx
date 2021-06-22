@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import DrinksContext from "../context/Context";
-import emptyHeard from "../images/empty-heart.png";
-import filledHeard from "../images/filled-heart.png";
 
 function FavoriteButon({ drinkId }) {
   const { recipes } = useContext(DrinksContext);
@@ -11,11 +9,10 @@ function FavoriteButon({ drinkId }) {
     if (recipes) {
       const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
       if (objectList === null) {
-        const favoriteDrinks = [];
-        localStorage.setItem("favoriteDrinks", JSON.stringify(favoriteDrinks));
+        localStorage.setItem('favoriteDrinks', JSON.stringify([]));
         return setFavorite(false);
       }
-      const newList = objectList.some((item) => item.id === drinkId);
+      const newList = objectList.some((item) => parseInt(item.id) === parseInt(drinkId));
       newList ? setFavorite(true) : setFavorite(false);
     }
   };
@@ -25,13 +22,13 @@ function FavoriteButon({ drinkId }) {
   }, [recipes]);
 
   const handleFavorite = () => {
-    const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
+    const objectList = JSON.parse(localStorage.getItem('favoriteDrinks'));
 
     const newList = favorite 
       ? objectList.filter((item) => item.id !== drinkId)
       : [...objectList, { id: drinkId }]
 
-    localStorage.setItem("favoriteDrinks", JSON.stringify(newList));
+    localStorage.setItem('favoriteDrinks', JSON.stringify(newList));
     setFavorite(!favorite);
   };
 
@@ -41,12 +38,10 @@ function FavoriteButon({ drinkId }) {
       data-testid="favorite-button"
       type="button" onClick={ () => handleFavorite() }
     >
-      {favorite ? <ion-icon size="large" name="heart"></ion-icon> :<ion-icon size="large" name="heart-outline"></ion-icon> }
-      {/* <img
-        className="search-icon"
-        src={ favorite ? filledHeard : emptyHeard }
-        alt={ favorite ? 'filled-heart-symbol' : 'empty-heart-symbol' }
-      /> */}
+      {
+        favorite ? <ion-icon size="large" name="heart"></ion-icon>
+        : <ion-icon size="large" name="heart-outline"></ion-icon>
+      }
     </button>
   );
 }

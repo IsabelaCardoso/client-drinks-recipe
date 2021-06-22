@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FavoriteButon from "./FavoriteButton";
 
-function DrinksCard({ origin, name, thumb, id, favorite }) {
+function DrinksCard({ origin, name, thumb, id }) {
   return (
     <div className="card">
       <Link data-testid={ name } className="link" to={`/details/${id}`}>

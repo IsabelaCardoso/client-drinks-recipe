@@ -23,7 +23,6 @@ function DrinksList() {
     .then((result) => setRecipes(result))
     .then(() => setLoading(false));
   }, []);
-  console.log('recipes drinkslist', recipes)
   if (loading) return <div>Loading your drinks...</div>;
 
   return (

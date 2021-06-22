@@ -48,7 +48,6 @@ function useFetch() {
     })
       .then((response) => response.json())
       .then((result) => result);
-    console.log('results', results);
     return results;
   };
 
@@ -87,10 +86,6 @@ function useFetch() {
   };
 
   const drinkDetailsFetch = async (id) => {
-    // const token = getToken()
-    console.log('entrei no detailsfetch');
-    console.log('id', id);
-    // console.log('token', token);
     const results = await fetch(`http://localhost:3001/drink/id/${id}`, {
         method: 'GET',
         headers: {
@@ -100,13 +95,13 @@ function useFetch() {
         },
       })
     .then((response) => response.json());
-    return results[0];
+    return results;
   };
 
   const getAllById = async (idsList) => {
     const urls = idsList.map(
       (drink) => `http://localhost:3001/drink/id/${drink.id}`);
-    const results = Promise.all(
+    const results = await Promise.all(
       urls.map((url) => fetch(url).then((response) => response.json()))
     ).then((result) => result);
     return results;
