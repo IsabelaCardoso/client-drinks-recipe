@@ -22,7 +22,6 @@ function useFetch() {
       body: JSON.stringify({ email, password }),
     });
     const data = await result.json();
-    console.log('data', data);
     return data;
   }
 
@@ -69,7 +68,6 @@ function useFetch() {
           Authorization: token,
         },
       }).then((response) => response.json());
-      console.log('fetch results', results);
       return results;
     }
     if (type === "first-letter" && search.length === 1) {
@@ -81,7 +79,6 @@ function useFetch() {
           Authorization: token,
         },
       }).then((response) => response.json());
-      console.log('results name', results);
       return results;
     }
   };
@@ -114,6 +111,21 @@ function useFetch() {
     return token;
   }
 
+  const updateDrink = async(recipe, token) => {
+    const result = await fetch(`http://localhost:3001/drink/${recipe.id}`, {
+      method: methods.put,
+      headers: {
+        Accept: informationType,
+        'Content-Type': informationType,
+        // Authorization: token
+      },
+      body: JSON.stringify(recipe),
+    });
+    const data = await result.json();
+    console.log('data', data);
+    return data;
+  }
+
   return {
     submitLogin,
     submitRegister,
@@ -122,6 +134,7 @@ function useFetch() {
     drinkDetailsFetch,
     getAllById,
     getToken,
+    updateDrink,
   };
 }
 

@@ -52,8 +52,6 @@ function Form({ history }) {
     }
   };
 
-  console.log('disabled', disabled)
-
   return (
     <div className="form-div">
       <form>

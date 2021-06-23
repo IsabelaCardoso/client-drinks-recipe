@@ -1,40 +1,64 @@
 import React, { useEffect, useState } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
 import useFetch from "../services/useFetch";
 
-function EditForm({ preloadedValues }) {
-  // const preloadedValues = {
-  //   firstname: 'Isa',
-  //   lastname: 'Cardoso'
-  // }
+function EditForm() {
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [ingredientsList, setIngredientsList] = useState([]);
+  const [remainingItemsList, setRemainingItemsList] = useState([]);
+  const { updateDrink } = useFetch();
 
-  const ingredientsList = preloadedValues.ingredients;
+  const { getAllById } = useFetch();
+  const id = window.location.href.split("edit/")[1];
 
-  const { control, register, handleSubmit } = useForm({
-    defaultValues: preloadedValues
-  });
+  useEffect(() => {
+    getAllById([{ id }])
+    .then((result) => setRecipe(result[0]))
+    .then(() => separateRecipeIntoTwoLists())
+    .then(() => setLoading(false));
+  }, []) 
 
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
-    control, 
-    name: "ingredients"
-  });
+  const handleEditSubmit = async() => {
+    let newRecipe = Object.fromEntries(remainingItemsList);
+    const newIngredientsList = ingredientsList[0][1];
+    newRecipe = { ...newRecipe, ingredients: newIngredientsList };
+    await updateDrink(newRecipe);
+  };
+  if (loading) return <div>Loading the recipe...</div>;
 
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+  const separateRecipeIntoTwoLists = () => {
+    const recipeList = Object.entries(recipe);
+    setIngredientsList(recipeList.filter((item) => item[0].includes('ingredients')));
+    setRemainingItemsList(recipeList.filter((item) => item[0] !== 'ingredients'));
+    return null;
   };
 
+  const handleChange = (target) => {
+    separateRecipeIntoTwoLists();
+    if (target.category) {
+      const newList = ingredientsList.map((item, index) => {
+        if (target.name === index) item.value = target.value;
+        return item;
+      })
+      setIngredientsList(newList);
+    }
+    if (!target.category) {
+      const newList = remainingItemsList.map((item) => {
+        if (item[0] === target.name) item[1] = target.value;
+        return item;
+      })
+      setRemainingItemsList(newList);
+    }
+  };
 
-  const reg = preloadedValues.ingredients[0].ingredient;
-  const registration = {...register(reg)}
-
-  console.log('recipe', preloadedValues.ingredients[0].ingredient);
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form>
       <label className="label">
         Name
         <input
+          defaultValue={recipe.name}
+          onChange={ (e) => handleChange(e.target)  }
           className="input"
-          {...register('name')}
           type="text"
           name="name"
         />
@@ -42,8 +66,9 @@ function EditForm({ preloadedValues }) {
       <label className="label">
         Instructions
         <input
+          onChange={ (e) => handleChange(e.target)  }
+          defaultValue={recipe.instructions}
           className="input"
-          {...register('instructions')}
           type="text"
           name="instructions"
         />
@@ -51,8 +76,9 @@ function EditForm({ preloadedValues }) {
       <label className="label">
         Category
         <input
+          onChange={ (e) => handleChange(e.target)  }
+          defaultValue={recipe.category}
           className="input"
-          {...register('category')}
           type="text"
           name="category"
         />
@@ -60,29 +86,43 @@ function EditForm({ preloadedValues }) {
       <label className="label">
         Image Path
         <input
+          onChange={ (e) => handleChange(e.target)  }
+          defaultValue={recipe.image}
           className="input"
-          {...register('image')}
           type="text"
           name="image"
         />
       </label>
-      <label className="label">
-        Image Path
-        <input
-          className="input"
-          {...register('image')}
-          name="image"
-          type="text"
-        />
-      </label>
-      {fields.map((field, index) => (
-      <input
-        key={field.id}
-        {...register('field.ingredient')} 
-        defaultValue={field.value}
-      />
-    ))}
-      <button>Submit</button>
+      {recipe.ingredients.map((item, index) => (
+        <div key={`${item} ${index}` } className="is-flex">
+          <label className="label m-2">
+            Ingredient
+            <input
+              onChange={ (e) => handleChange(e.target)  }
+              defaultValue={item.ingredient}
+              className="input"
+              type="text"
+              category="ingredient"
+              name={ index }
+            />
+          </label>
+          <label className="label m-2">
+            Measure
+            <input
+              onChange={ (e) => handleChange(e.target)  }
+              defaultValue={item.measure}
+              className="input"
+              type="text"
+              category="measure"
+              name={ index }
+            />
+          </label>
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={ () => handleEditSubmit() }
+      >Submit</button>
     </form>
   );
 }

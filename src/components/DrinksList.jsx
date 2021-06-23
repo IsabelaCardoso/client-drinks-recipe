@@ -24,7 +24,6 @@ function DrinksList() {
   }, []);
   if (loading) return <div>Loading your drinks...</div>;
 
-  console.log('recipes drinkslist', recipes);
   return (
     <div>
       <div className="is-flex is-justify-content-flex-end">
