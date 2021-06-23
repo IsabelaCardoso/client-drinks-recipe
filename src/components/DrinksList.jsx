@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import DrinksContext from "../context/Context";
 import useFetch from "../services/useFetch";
 import DrinksCard from "./DrinksCard";
-import objRecipes from '..//tests/helper/fixtures/recipes';
 
 function DrinksList() {
   const [loading, setLoading] = useState(true);
@@ -25,6 +24,7 @@ function DrinksList() {
   }, []);
   if (loading) return <div>Loading your drinks...</div>;
 
+  console.log('recipes drinkslist', recipes);
   return (
     <div>
       <div className="is-flex is-justify-content-flex-end">
@@ -41,7 +41,7 @@ function DrinksList() {
               onClick={() => setNoRecipesMessage(!noRecipesMessage)}
               className="delete"
             ></button>
-            Sorry, we couldn't find any recipes for the selected filter. Try again.
+            Sorry, we couldn't find any recipe for the selected filter. Try again.
           </span>
           <span hidden={!categoryRequired} className="notification is-warning">
             <button

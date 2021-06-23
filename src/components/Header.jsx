@@ -1,14 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
-import DrinksContext from "../context/Context";
-import ShareButton from "./ShareButton";
 import Titles from "./Titles";
 import useFetch from "../services/useFetch";
 
 function Header({ subtitle }) {
   const [searchBar, setSearchBar] = useState(false);
-  const { setRecipes } = useContext(DrinksContext);
   const { randomDrinksFetch } = useFetch();
 
   return (

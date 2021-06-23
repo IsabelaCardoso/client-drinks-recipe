@@ -2,7 +2,7 @@ import { useContext } from "react";
 import DrinksContext from "../context/Context";
 
 function useFetch() {
-  const { noRecipesMessage, setNoRecipesMessage, setOneWordHidden, setInvalidNameHidden } =
+  const { setOneWordHidden, setInvalidNameHidden } =
     useContext(DrinksContext);
 
   const informationType = 'application/json';
@@ -61,19 +61,6 @@ function useFetch() {
     }
     if (type === "name" && search.length > 1) {
       const results = await fetch(`http://localhost:3001/drink/name/${search}`, {
-      method: 'GET',
-      headers: {
-        Accept: informationType,
-        'Content-Type': informationType,
-        Authorization: token,
-      },
-    }).then((response) => response.json());
-      if (results.drinks === []) return setNoRecipesMessage(!noRecipesMessage);
-      return results;
-    }
-    if (type === "first-letter" && search.length === 1) {
-
-      const results = await fetch(`http://localhost:3001/drink/${search}`, {
         method: 'GET',
         headers: {
           Accept: informationType,
@@ -81,6 +68,19 @@ function useFetch() {
           Authorization: token,
         },
       }).then((response) => response.json());
+      console.log('fetch results', results);
+      return results;
+    }
+    if (type === "first-letter" && search.length === 1) {
+      const results = await fetch(`http://localhost:3001/drink/letter/${search}`, {
+        method: 'GET',
+        headers: {
+          Accept: informationType,
+          'Content-Type': informationType,
+          Authorization: token,
+        },
+      }).then((response) => response.json());
+      console.log('results name', results);
       return results;
     }
   };
