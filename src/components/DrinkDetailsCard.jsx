@@ -61,7 +61,7 @@ function DrinkDetailsCard() {
         <FavoriteButton drinkId={parseInt(idDrink)} />
         <ShareButton />
       </div>
-      <Link to="/edit">
+      <Link to={`/edit/${ idDrink }`}>
         <button
           className="button search-button is-outlined m-0 mr-2"
         >

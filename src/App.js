@@ -16,7 +16,7 @@ function App() {
           <Route path="/register" component={ RegisterPage } />
           <Route path="/details/:id" component={ DetailsPage } />
           <Route path="/favorite" component={ FavoriteDrinksPage } />
-          <Route path="/edit" component={ EditPage } />
+          <Route path="/edit/:id" component={ EditPage } />
         </Switch>
     </div>
   );
