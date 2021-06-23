@@ -1,44 +1,48 @@
-import React, { useContext, useState } from 'react';
-import SearchBar from './SearchBar';
-import searchIcon from '../images/searchIcon.png'
-import '../css/SearchIcon.css'
-import { Link, Redirect } from 'react-router-dom';
-import DrinksContext from '../context/Context';
-import ShareButton from './ShareButton';
+import React, { useState } from "react";
+import SearchBar from "./SearchBar";
+import { Link } from "react-router-dom";
+import Titles from "./Titles";
+import useFetch from "../services/useFetch";
 
-function Header() {
+function Header({ subtitle }) {
   const [searchBar, setSearchBar] = useState(false);
-  const { setRecipes } = useContext(DrinksContext);
-
-  // const handleClick = () => {
-  //   setRecipes('null');
-  //   return (<Redirect path="/favorite" />);
-  // }
+  const { randomDrinksFetch } = useFetch();
 
   return (
-    <>
-      <h1>Drinks Recipes</h1>
-      <Link to="/favorite">
-        <button
-          type="button"
-          // onClick={() => handleClick()}
-        >
-          Favorite Drinks
-        </button>
-      </Link>
-      <ShareButton />
-      <p
-        type="button"
-        onClick={ () => setSearchBar(!searchBar) }
-      >
-        <img
-          className="search-icon"
-          src={ searchIcon }
-          alt="botão com desenho de uma lupa"
-        />
-      </p>
-        {searchBar && <SearchBar />}
-    </>
+    <div>
+      <Titles subtitle={subtitle} />
+      <nav className="navbar is-flex is-flex-direction-column" role="navigation" aria-label="main navigation">
+        <div className="navbar-menu has-background-grey-darker">
+          <div className="navbar-start">
+            <p className="navbar-item">
+              <Link to="/" onClick={() => randomDrinksFetch()}>Home</Link>
+            </p>
+            <p className="navbar-item">
+              <Link to="/favorite">Favorite Drinks</Link>
+            </p>
+          </div>
+          <div className="navbar-end">
+            <p className="navbar-item">
+              <Link to="/login" >Login</Link>
+            </p>
+            <p className="navbar-item">
+              <Link to="/register" >Register</Link>
+            </p>
+          </div>
+          </div>
+          <div className="navbar-end">
+            <div className="navbar-item is-align-items-flex-start">
+                <button
+                  onClick={() => setSearchBar(!searchBar)}
+                  className="button search-button is-outlined m-0 mr-2"
+                >
+                  <strong>Search</strong>
+                </button>
+              {searchBar && <SearchBar />}
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 }
 
