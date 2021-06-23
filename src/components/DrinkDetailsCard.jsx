@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import DrinksContext from "../context/Context";
 import useFetch from "../services/useFetch";
 import FavoriteButton from "./FavoriteButton";
@@ -13,8 +14,8 @@ function DrinkDetailsCard() {
 
   useEffect(() => {
     drinkDetailsFetch(idDrink)
-    .then((result) => setRecipes(result))
-    .then(() => setLoading(false));
+      .then((result) => setRecipes(result))
+      .then(() => setLoading(false));
   }, []);
 
   if (loading) return <div>Loading the recipe...</div>;
@@ -37,8 +38,13 @@ function DrinkDetailsCard() {
           </h5>
           <br />
           {recipes.ingredients.map((item) => {
-            if (item.measure === null) return <li key={ item.ingredient }>{ item.ingredient }</li>;
-            return <li key={ item.ingredient }>{ `${ item.ingredient } - ${ item.measure }` }</li>;
+            if (item.measure === null)
+              return <li key={item.ingredient}>{item.ingredient}</li>;
+            return (
+              <li
+                key={item.ingredient}
+              >{`${item.ingredient} - ${item.measure}`}</li>
+            );
           })}
         </ul>
         <div className="is-flex">
@@ -52,9 +58,16 @@ function DrinkDetailsCard() {
         </div>
       </div>
       <div>
-        <FavoriteButton drinkId={ parseInt(idDrink) } />
+        <FavoriteButton drinkId={parseInt(idDrink)} />
         <ShareButton />
       </div>
+      <Link to="/edit">
+        <button
+          className="button search-button is-outlined m-0 mr-2"
+        >
+          Edit Drink
+        </button>
+      </Link>
     </div>
   );
 }

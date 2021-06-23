@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import './App.css'
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import EditPage from './pages/EditPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/register" component={ RegisterPage } />
           <Route path="/details/:id" component={ DetailsPage } />
           <Route path="/favorite" component={ FavoriteDrinksPage } />
+          <Route path="/edit" component={ EditPage } />
         </Switch>
     </div>
   );

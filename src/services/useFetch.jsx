@@ -22,6 +22,7 @@ function useFetch() {
       body: JSON.stringify({ email, password }),
     });
     const data = await result.json();
+    console.log('data', data);
     return data;
   }
 

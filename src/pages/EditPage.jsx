@@ -2,13 +2,12 @@ import React from 'react';
 import Form from '../components/Form';
 import Titles from '../components/Titles';
 
-function LoginPage({ history }) {
+function EditPage({ history }) {
   return (
     <>
-      <Titles subtitle="Login" />
-      <Form history={ history } />
+      <Titles subtitle="Edit Drink Recipe" />
     </>
   );
 };
 
-export default LoginPage;
+export default EditPage;
