@@ -1,13 +1,15 @@
-import React from 'react';
-import DrinksList from '../components/DrinksList';
-import Header from '../components/Header';
+import React from "react";
+import DrinksList from "../components/DrinksList";
+import Header from "../components/Header";
 
 function HomePage() {
   return (
-    <>
-      <Header />
-      <DrinksList />
-    </>
+    <div className="container home-page is-fluid">
+      <Header subtitle="Home Page" />
+      <div>
+        <DrinksList />
+      </div>
+    </div>
   );
 }
 

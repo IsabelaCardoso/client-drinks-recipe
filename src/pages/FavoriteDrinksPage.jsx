@@ -1,51 +1,56 @@
-import React, { useContext, useEffect, useState } from 'react';
-import DrinksContext from '../context/Context';
-import '../css/DrinksCard.css'
-import useFetch from '../services/useFetch';
-import DrinksCard from '../components/DrinksCard';
-import { Link } from 'react-router-dom';
-import backArrow from '../images/backArrow.png'
-// import DrinksList from '../components/DrinksList';
-// import Header from '../components/Header';
+import React, { useContext, useEffect, useState } from "react";
+import DrinksContext from "../context/Context";
+import useFetch from "../services/useFetch";
+import DrinksCard from "../components/DrinksCard";
+import Titles from "../components/Titles";
+import BackToHomeArrow from "../components/BackToHomeArrow";
 
 function FavoriteDrinksPage() {
   const [loading, setLoading] = useState(true);
   const { getAllById } = useFetch();
-  const { recipes } = useContext(DrinksContext);
+  const { recipes, setRecipes } = useContext(DrinksContext);
   const [noFavorites, setNoFavorites] = useState(false);
 
   useEffect(() => {
-    loadPage()
-      .then(() => setLoading(false))
-  }, []);
-  
-  const loadPage = async () => {
-    const objectList = JSON.parse(localStorage.getItem('favoriteDrinks'));
-    if (objectList === null || objectList === []) {
-      return setNoFavorites(true);
+    const objectList = getLocalStorage()
+    if (objectList) {
+      getAllById(objectList)
+        .then((result) => setRecipes(result))
+        .then(() => setLoading(false));
     }
-    await getAllById(objectList);
-  }
+  }, []);
 
-  if (loading) return (<div>Carregando suas receitas favoritas...</div>);
-  
+  const getLocalStorage = () => {
+    const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
+    if (objectList.length === 0 || objectList === null) setNoFavorites(true);
+    return objectList;
+  };
+
+  if (loading) return <div>Loading your favorite recipes...</div>;
+
   return (
     <>
-      <Link to="/">
-        <img className="arrow-icon" src={ backArrow } alt="black arrow pointing left, go back" />
-      </Link>
-      {(recipes && recipes[0]) && recipes.map((recipe) => {
-        const drink = recipe.drinks[0];
-        return <DrinksCard
-         key={ drink.idDrink }
-         name={ drink.strDrink }
-         thumb={ drink.strDrinkThumb }
-         id={ drink.idDrink }
-         type="favorite"
-       />
-      }
-      )}
-      <span hidden={!noFavorites}>Parece que você ainda não tem nenhum drink favorito</span>
+      <Titles subtitle="Favorites" />
+      <BackToHomeArrow />
+      <div className="container">
+        <div>
+          <div className="drinks-card-container is-justify-content-center">
+            {recipes && recipes.map((recipe) => (
+                  <DrinksCard
+                    origin="favorite-page"
+                    key={recipe.id}
+                    name={recipe.name}
+                    thumb={recipe.image}
+                    id={recipe.id}
+                    type="favorite"
+                  />
+                ))}
+          </div>
+        </div>
+      </div>
+      <p hidden={!noFavorites} className="notification is-warning">
+        Looks like you don't have any favorite drinks yet
+      </p>
     </>
   );
 }
