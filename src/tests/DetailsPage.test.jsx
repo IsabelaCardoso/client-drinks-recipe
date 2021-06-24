@@ -1,17 +1,15 @@
 import React from 'react';
 import renderWithRouter from './helper/renderWithRouter';
-import { cleanup, fireEvent } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import Provider from '../context/Provider';
-import FavoriteDrinksPage from '../pages/FavoriteDrinksPage';
 import DetailsPage from '../pages/DetailsPage';
-import DrinksList from '../components/DrinksList';
-import recipes from './helper/fixtures/recipes';
 import drink from './helper/fixtures/drinkDetailsRecipe';
+import { createMemoryHistory } from 'history';
 
 describe('Tests the DetailsPage elements', () => {
   beforeEach(async() => {
     global.window = Object.create(window);
-    const url = "http://localhost:3000/details/15997";
+    const url = "http://localhost:3000/details/11";
     Object.defineProperty(window, 'location', {
       value: {
         href: url
@@ -21,17 +19,19 @@ describe('Tests the DetailsPage elements', () => {
   afterEach(cleanup);
   
   it('render the recipe corresponding to the url id', async() => {
-    const { findByText } = renderWithRouter(<Provider><DetailsPage /></Provider>);
+    const history = createMemoryHistory()
+    const { findByText } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
     jest.fn().mockReturnValue(drink);
-    const idInTheUrl = window.location.href.split("details/")[1];
-    const idInTheDrinkLoaded = drink.drinks[0].id;
+    const idInTheUrl = parseInt(window.location.href.split("details/")[1]);
+    const idInTheDrinkLoaded = drink.id;
     const titleDrinkGG = await findByText('GG');
     expect(idInTheUrl).toEqual(idInTheDrinkLoaded);
     expect(titleDrinkGG).toBeInTheDocument();
   });
 
   it('render the "Ingredients" list and "Instructions"', async() => {
-    const { findByText } = renderWithRouter(<Provider><DetailsPage /></Provider>);
+    const history = createMemoryHistory()
+    const { findByText } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
     jest.fn().mockReturnValue(drink);
 
     const ingredientsList = await findByText('Ingredients');
@@ -41,7 +41,8 @@ describe('Tests the DetailsPage elements', () => {
   });
 
   it('test if the favorite button appears on the page', async () => {
-    const { findByTestId } = renderWithRouter(<Provider><DetailsPage /></Provider>);
+    const history = createMemoryHistory()
+    const { findByTestId } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
     jest.fn().mockReturnValue(drink);
 
     const favoriteButton = await findByTestId('favorite-button');
@@ -49,28 +50,42 @@ describe('Tests the DetailsPage elements', () => {
   });
 
   it('test if the share button appears on the page', async () => {
-    const { findByTestId } = renderWithRouter(<Provider><DetailsPage /></Provider>);
+    const history = createMemoryHistory()
+    const { findByTestId } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
     jest.fn().mockReturnValue(drink);
 
     const shareButton = await findByTestId('share-button');
     expect(shareButton).toBeInTheDocument();
   });
 
-  it('test if the drink is alcoholic or not', async () => {
-    const { findByTestId } = renderWithRouter(<Provider><DetailsPage /></Provider>);
+  it('test if the drink has a category', async () => {
+    const history = createMemoryHistory()
+    const { findByTestId } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
     jest.fn().mockReturnValue(drink);
 
-    const drinksType = await findByTestId('drink-alcoholic-or-not');
+    const drinksType = await findByTestId('drink-category');
     expect(drinksType).toBeInTheDocument();
   });
 
-  // it('test if when click on share button, the message "Link copied" appears', async () => {
-  //   const { findByTestId, findByText } = renderWithRouter(<Provider><DetailsPage /></Provider>);
-  //   jest.fn().mockReturnValue(drink);
-  //   const shareButton = await findByTestId('share-button');
-  //   fireEvent.click(shareButton);
+  it('test if the `Edit Drink` button exist', async () => {
+    const history = createMemoryHistory()
+    const { findByText } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
+    const editButton = await findByText('Edit Drink');
+    expect(editButton).toBeInTheDocument();
+  });
 
-  //   const messageLinkCopied = await findByText('Link copied');
-  //   expect(messageLinkCopied).toBeInTheDocument();
-  // });
+  it('test if the `Delete Drink` button exist', async () => {
+    const history = createMemoryHistory()
+    const { findByText } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
+    const deleteButton = await findByText('Delete Drink');
+    expect(deleteButton).toBeInTheDocument();
+  });
+
+  it('test if the `Edit Drink` link redirects to the URL `/edit/:id`', async() => {
+    const history = createMemoryHistory()
+    const { findByTestId } = renderWithRouter(<Provider><DetailsPage history={ history } /></Provider>);
+    const idInTheUrl = parseInt(window.location.href.split("details/")[1]);
+    const editLink = await findByTestId('edit-link');
+    expect(editLink.getAttribute('href')).toBe(`/edit/${idInTheUrl}`);
+  });
 });

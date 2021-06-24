@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import DrinksContext from "../context/Context";
 import useFetch from "../services/useFetch";
 import DrinksCard from "../components/DrinksCard";
-import Titles from "../components/Titles";
 import BackToHomeArrow from "../components/BackToHomeArrow";
 import Header from "../components/Header";
 
@@ -12,6 +11,11 @@ function FavoriteDrinksPage({ history }) {
   const { recipes, setRecipes } = useContext(DrinksContext);
   const [noFavorites, setNoFavorites] = useState(false);
 
+  const getLocalStorage = () => {
+    const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
+    if (objectList.length === 0 || objectList === null) setNoFavorites(true);
+    return objectList;
+  };
   useEffect(() => {
     const objectList = getLocalStorage()
     if (objectList) {
@@ -20,12 +24,6 @@ function FavoriteDrinksPage({ history }) {
         .then(() => setLoading(false));
     }
   }, []);
-
-  const getLocalStorage = () => {
-    const objectList = JSON.parse(localStorage.getItem("favoriteDrinks"));
-    if (objectList.length === 0 || objectList === null) setNoFavorites(true);
-    return objectList;
-  };
 
   if (loading) return <div>Loading your favorite recipes...</div>;
 
@@ -39,8 +37,8 @@ function FavoriteDrinksPage({ history }) {
           <div className="drinks-card-container is-justify-content-center">
             {recipes && recipes.map((recipe) => (
                   <DrinksCard
-                    origin="favorite-page"
                     key={recipe.id}
+                    origin="favorite-page"
                     name={recipe.name}
                     thumb={recipe.image}
                     id={recipe.id}

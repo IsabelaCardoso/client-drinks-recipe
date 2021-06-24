@@ -33,13 +33,12 @@ function DrinkDetailsCard({ history }) {
   };
 
   if (loading) return <div>Loading the recipe...</div>;
-
   return (
     <div className="box">
       <div>
         <h1 className="title">{recipes.name}</h1>
       </div>
-      <p>{recipes.category}</p>
+      <p data-testid="drink-category">{recipes.category}</p>
       <img
         className="drink-thumb-details"
         src={recipes.image}
@@ -76,7 +75,7 @@ function DrinkDetailsCard({ history }) {
         <ShareButton />
       </div>
       <div className="mt-5">
-        <Link to={`/edit/${ idDrink }`}>
+        <Link data-testid="edit-link" to={`/edit/${ idDrink }`}>
           <button
             type="button"
             className="button search-button is-outlined m-0 mr-5"

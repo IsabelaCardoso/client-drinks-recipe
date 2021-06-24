@@ -1,3 +1,3 @@
-const recipesLocalStorage = [{ id: "15997" }, { id: "17222" }];
+const recipesLocalStorage = [{ id: 11 }, { id: 11 }];
 
 export default recipesLocalStorage;

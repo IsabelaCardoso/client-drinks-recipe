@@ -4,7 +4,7 @@ import FavoriteButon from "./FavoriteButton";
 
 function DrinksCard({ origin, name, thumb, id }) {
   return (
-    <div className="card">
+    <div className="card" key={ id }>
       <Link data-testid={ name } className="link" to={`/details/${id}`}>
         <div className="card-image">
             <img

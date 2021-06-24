@@ -1,6 +1,6 @@
 class LocalStorageMock {
   constructor() {
-    this.store = {};
+    this.store = [{ id: "15997" }, { id: "17222" }];
   }
 
   clear() {

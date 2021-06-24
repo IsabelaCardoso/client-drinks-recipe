@@ -9,12 +9,12 @@ describe('Tests the DrinksList elements', () => {
 
   afterEach(cleanup);
 
-  it('renders random drinks cards, with name and image', async() => {
+  it('renders random drinks cards', async() => {
     const { findByText, getByAltText } = renderWithRouter(<Provider><DrinksList /></Provider>);
     jest.fn().mockReturnValue(recipes);
     
-    recipes['drinks'].forEach(async(drinkRecipe) => {
-      const drinkName = drinkRecipe['strDrink'];
+    recipes.forEach(async(drinkRecipe) => {
+      const drinkName = drinkRecipe['name'];
       const drinkLabel = await findByText("GG");
       expect(drinkLabel).toBeInTheDocument();
 
