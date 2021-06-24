@@ -22,12 +22,4 @@ describe('Tests the DrinksList elements', () => {
       expect(drinkAltText).toBeInTheDocument();
     })
   });
-
-  // it('renders the correct title and subtitle', async () => {
-  //   const { findByText } = renderWithRouter(<Provider><DrinksList /></Provider>);
-  //   const title = await findByText('Best Drinks');
-  //   const subtitle = await findByText('Home Page');
-  //   expect(title).toBeInTheDocument();
-  //   expect(subtitle).toBeInTheDocument();
-  // })
 });

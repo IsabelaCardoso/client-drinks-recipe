@@ -16,22 +16,6 @@ describe('Tests the FavoriteDrinksPage elements', () => {
 
   afterEach(cleanup);
 
-  // it('should get items from LocalStorage and render', async() => {
-  //   const history = createMemoryHistory()
-  //   const { findByText } = renderWithRouter(<Provider><FavoriteDrinksPage history={ history } /></Provider>);
-  //   const drinkGG = await findByText('GG');
-  //   const drinkA1 = await findByText('A1');
-  //   expect(drinkGG).toBeInTheDocument();
-  //   expect(drinkA1).toBeInTheDocument();
-  // });
-
-  // it('test if the card link redirects to the details page', async() => {
-  //   const history = createMemoryHistory()
-  //   const { findByTestId } = renderWithRouter(<Provider><FavoriteDrinksPage history={ history } /></Provider>);
-  //   const linkDrinkGG = await findByTestId('GG');
-  //   expect(linkDrinkGG.getAttribute('href')).toBe('/details/15997');
-  // });
-
   it('test if the favorite buttons appears on the page', async () => {
     const history = createMemoryHistory()
     const { findAllByTestId } = renderWithRouter(<Provider><FavoriteDrinksPage history={ history } /></Provider>);
