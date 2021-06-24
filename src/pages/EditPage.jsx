@@ -2,11 +2,11 @@ import React from 'react';
 import EditForm from '../components/EditForm';
 import Titles from '../components/Titles';
 
-function EditPage() {
+function EditPage({ history }) {
   return (
     <>
       <Titles subtitle="Edit Drink Recipe" />
-      <EditForm />
+      <EditForm history={ history } />
     </>
   );
 };

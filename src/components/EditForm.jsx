@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../services/useFetch";
 
-function EditForm() {
+function EditForm({ history }) {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [ingredientsList, setIngredientsList] = useState([]);
   const [remainingItemsList, setRemainingItemsList] = useState([]);
-  const { updateDrink } = useFetch();
+  const { updateDrink, getToken } = useFetch();
 
   const { getAllById } = useFetch();
   const id = window.location.href.split("edit/")[1];
@@ -14,35 +14,63 @@ function EditForm() {
   useEffect(() => {
     getAllById([{ id }])
     .then((result) => setRecipe(result[0]))
-    .then(() => separateRecipeIntoTwoLists())
     .then(() => setLoading(false));
-  }, []) 
+  }, []);
+
+  useEffect(() => {
+    separateRecipeIntoTwoLists();
+  }, [recipe]);
 
   const handleEditSubmit = async() => {
     let newRecipe = Object.fromEntries(remainingItemsList);
-    const newIngredientsList = ingredientsList[0][1];
-    newRecipe = { ...newRecipe, ingredients: newIngredientsList };
-    await updateDrink(newRecipe);
-  };
-  if (loading) return <div>Loading the recipe...</div>;
+    let onlyIngredients = [];
+    ingredientsList.map((item) => onlyIngredients.push(item[1]));
+    console.log('onlyIngredients', onlyIngredients);
+    newRecipe = { ...newRecipe, ingredients: onlyIngredients };
 
+    const token = getToken()
+    await updateDrink(newRecipe, token);
+    return history.push(`/details/${id}`)
+  };
+  
   const separateRecipeIntoTwoLists = () => {
-    const recipeList = Object.entries(recipe);
-    setIngredientsList(recipeList.filter((item) => item[0].includes('ingredients')));
-    setRemainingItemsList(recipeList.filter((item) => item[0] !== 'ingredients'));
-    return null;
+    if (recipe) {
+      const ingredients = recipe.ingredients;
+      console.log('ing list', recipe.ingredients);
+      setIngredientsList(Object.entries(ingredients));
+      
+      const othenItemsList = Object.entries(recipe);
+      setRemainingItemsList(othenItemsList.filter((item) => item[0] !== 'ingredients'));
+      return null;
+    }
   };
-
-  const handleChange = (target) => {
-    separateRecipeIntoTwoLists();
-    if (target.category) {
+  
+  const handleIngredientsChange = (target, type) => {
+    if (type === 'ingredient') {
       const newList = ingredientsList.map((item, index) => {
-        if (target.name === index) item.value = target.value;
+        if (parseInt(target.name) === index) {
+          item[1].ingredient = target.value;
+          return item;
+        }
         return item;
-      })
+      });
       setIngredientsList(newList);
     }
-    if (!target.category) {
+    if (type === 'measure') {
+      const newList = ingredientsList.map((item, index) => {
+        if (parseInt(target.name) === index) {
+          item[1].measure = target.value;
+          return item;
+        }
+        return item;
+      });
+      setIngredientsList(newList);
+    }
+  };
+
+  const handleChange = (target, type) => {
+    handleIngredientsChange(target, type)
+    if (!type) {
       const newList = remainingItemsList.map((item) => {
         if (item[0] === target.name) item[1] = target.value;
         return item;
@@ -50,7 +78,9 @@ function EditForm() {
       setRemainingItemsList(newList);
     }
   };
-
+  
+  if (loading) return <div>Loading the recipe...</div>;
+  
   return (
     <form>
       <label className="label">
@@ -61,7 +91,7 @@ function EditForm() {
           className="input"
           type="text"
           name="name"
-        />
+          />
       </label>
       <label className="label">
         Instructions
@@ -98,22 +128,20 @@ function EditForm() {
           <label className="label m-2">
             Ingredient
             <input
-              onChange={ (e) => handleChange(e.target)  }
+              onChange={ (e) => handleChange(e.target, 'ingredient')  }
               defaultValue={item.ingredient}
               className="input"
               type="text"
-              category="ingredient"
               name={ index }
             />
           </label>
           <label className="label m-2">
             Measure
             <input
-              onChange={ (e) => handleChange(e.target)  }
+              onChange={ (e) => handleChange(e.target, 'measure')  }
               defaultValue={item.measure}
               className="input"
               type="text"
-              category="measure"
               name={ index }
             />
           </label>

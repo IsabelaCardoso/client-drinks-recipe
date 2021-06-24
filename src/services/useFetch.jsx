@@ -112,12 +112,14 @@ function useFetch() {
   }
 
   const updateDrink = async(recipe, token) => {
+    // console.log('token', token.token)
+    console.log(recipe)
     const result = await fetch(`http://localhost:3001/drink/${recipe.id}`, {
       method: methods.put,
       headers: {
         Accept: informationType,
         'Content-Type': informationType,
-        // Authorization: token
+        Authorization: token.token
       },
       body: JSON.stringify(recipe),
     });

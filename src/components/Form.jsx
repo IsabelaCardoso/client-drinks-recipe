@@ -38,16 +38,16 @@ function Form({ history }) {
   };
 
   const handleSubmit = () => {
-    const email = validateEmail();
-    const fullName = validateFullName();
-    const password = validatePassword();
+    const isEmailTrue = validateEmail(email);
+    const isPasswordTrue = validatePassword(password);
     if (originPath === "/login") {
-      if (email === true && password === true) return submitLogin(email, password).then((result) => handleToken(result));
+      if (isPasswordTrue === true && isEmailTrue === true) return submitLogin(email, password).then((result) => handleToken(result));
       if (validateEmail || validatePassword === false) return alert('Email or password invalid');
     }
     if (originPath === "/register") {
+      const isFullNameTrue = validateFullName();
       const data = { fullName, password, email };
-      if (fullName && email && password === true) submitRegister(data).then((result) => handleToken(result))
+      if (isFullNameTrue && isEmailTrue && isPasswordTrue === true) submitRegister(data).then((result) => handleToken(result))
       return alert('Invalid fields');
     }
   };
