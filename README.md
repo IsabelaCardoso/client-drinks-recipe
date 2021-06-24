@@ -2,33 +2,37 @@
 
 Esse projeto é a minha solução para o desafio do processo seletivo da Saraiva Educação. A proposta foi desenvolver um sistema web que permitisse consumir uma API para busca de receitas de coquetéis e drinks.
 
+## Desafio Front-End
 
 ## Dependências
 
-Utilizei o ReactJS para desenvolvimento do front-end, Jest para testes e CSS e Bulma para a estilização.
+Utilizei o ReactJS para desenvolvimento, React Testing Library para testes e CSS e Bulma para a estilização.
 
 
 ## Interface do Usuário
 
-### Página inicial
-* Página inicial: A aplicação inicia na Home, que ao carregar, apresenta uma lista de drinks aleatórios.
-* Barra de navegação: possibilita que você escolha entre a Página inicial e a Página de favoritos.
-* Barra de busca: possibilita que você busque por drinks em duas categorias - "pela primeira letra" ou "nome".
-* Card de drinks: Apresenta a imagem e nome de cada drink.
+* Página inicial
+* Login
+* Cadastro do usuário
+* Detalhes de receita
+* Página de Favoritos
+* Página de Criação de Drink
+* Página de Edição de Drink
 
 ### Detalhes da receita
 
-Apresenta todas as informações do drink:
-* Nome
-* Alcóolico ou não
-* Lista de ingredientes
-* Instrução de preparo
-* Adicionar ou remover o drink dos favoritos
-* Compartilhar o link da receita
+A aplicação permite ao usuário:
+* Se cadastrar
+* Fazer login
+* Visualizar todas as receitas do banco de dados
+* Favoritar
+* Criar receitas novas (contanto que esteja logado)
+* Editar receitas existentes (contanto que esteja logado)
+* Buscar drink por nome
+* Buscar drink pela primeira letra
+* Botão que copia a url para o clipboard para compartilhar a receita
 
-### Página de favoritos
-
-* Card de todos os drinks favoritados com: Nome, imagem e coração (símbolo de favorito)
+Todas as páginas possuem o título padrão, subtítulo de acordo a rota e barra de navegação.
 
 ## Rodando a Aplicação
 
@@ -43,4 +47,3 @@ Rode a aplicação
 ## Rodando os Testes
 
 ### `npm test`
-
