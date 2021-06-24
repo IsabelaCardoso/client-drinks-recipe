@@ -42,7 +42,10 @@ function UsersForm({ history }) {
     const isPasswordTrue = validatePassword(password);
 
     if (originPath === "/login") {
-      if (validateEmail === false || validatePassword === false) return alert('Email or password invalid');
+      if (!isEmailTrue || !isPasswordTrue) {
+        setResponseMessage('Email or password invalid');
+        setSpanMessage(!spanMessage)
+      }
       if (isPasswordTrue === true && isEmailTrue === true) return submitLogin(email, password).then((result) => handleToken(result));
     }
     if (originPath === "/register") {
@@ -70,7 +73,7 @@ function UsersForm({ history }) {
                 className="input"
                 name="name"
                 value={ fullName }
-                data-testid="signup-name"
+                data-testid="register-name"
                 onChange={({ target }) => setFullName(target.value)}
               />
             </div>
@@ -85,9 +88,9 @@ function UsersForm({ history }) {
             <input
               className="input"
               data-testid={
-                originPath === "/register" ? "signup-email" : "login-email"
+                originPath === "/register" ? "register-email" : "login-email"
               }
-              value={email}
+              value={ email }
               name="email"
               onChange={({ target }) => setEmail(target.value)}
             />

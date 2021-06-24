@@ -13,46 +13,65 @@ function useFetch() {
     delete: 'DELETE'
   };
 
-  const submitLogin = async(email, password) => {
-    const result = await fetch('http://localhost:3001/login', {
-      method: methods.post,
+  const fetchInfosWithBody = (data, method) => {
+    const fetchInformations = {
+      method: method,
+      headers: {
+      Accept: informationType,
+      'Content-Type': informationType,
+    },
+    body: JSON.stringify(data)
+    }
+    return fetchInformations;
+  };
+
+  const fetchInfosWithBodyAndToken = (data, method, token) => {
+    const fetchInformations = {
+      method: method,
+      headers: {
+      Accept: informationType,
+      'Content-Type': informationType,
+      Authorization: token.token
+    },
+    body: JSON.stringify(data)
+    }
+    return fetchInformations;
+  };
+
+  const fetchInfosMethod = (method) => {
+    const fetchInformations = {
+      method: method,
       headers: {
         Accept: informationType,
         'Content-Type': informationType,
-      },
-      body: JSON.stringify({ email, password }),
-    });
+      }
+    }
+    return fetchInformations;
+  };
+
+
+  const submitLogin = async(email, password) => {
+    const result = await fetch('http://localhost:3001/login',
+      fetchInfosWithBody({ email, password }, methods.post));
     const data = await result.json();
     return data;
   }
 
   const submitRegister = async({ fullName, email, password }) => {
-    const result = await fetch('http://localhost:3001/register', {
-      method: methods.post,
-      headers: {
-        Accept: informationType,
-        'Content-Type': informationType,
-      },
-      body: JSON.stringify({ fullName, email, password }),
-    });
+    const result = await fetch('http://localhost:3001/register',
+      fetchInfosWithBody({ fullName, email, password }, methods.post));
     const data = await result.json();
     return data;
   }
 
   const randomDrinksFetch = async () => {
-    const results = await fetch('http://localhost:3001/drink', {
-      method: 'GET',
-      headers: {
-        Accept: informationType,
-        'Content-Type': informationType,
-      },
-    })
+    const results = await fetch('http://localhost:3001/drink', fetchInfosMethod(methods.get))
       .then((response) => response.json())
       .then((result) => result);
     return results;
   };
 
-  const searchFetch = async (inputValues, token) => {
+  const searchFetch = async (inputValues) => {
     const { search, type } = inputValues;
     if (type === "first-letter" && search.length > 1) {
       return setOneWordHidden(true);
@@ -61,38 +80,20 @@ function useFetch() {
       return setInvalidNameHidden(true);
     }
     if (type === "name" && search.length > 1) {
-      const results = await fetch(`http://localhost:3001/drink/name/${search}`, {
-        method: 'GET',
-        headers: {
-          Accept: informationType,
-          'Content-Type': informationType,
-          Authorization: token,
-        },
-      }).then((response) => response.json());
+      const results = await fetch(`http://localhost:3001/drink/name/${search}`,
+        fetchInfosMethod(methods.get)).then((response) => response.json());
       return results;
     }
     if (type === "first-letter" && search.length === 1) {
-      const results = await fetch(`http://localhost:3001/drink/letter/${search}`, {
-        method: 'GET',
-        headers: {
-          Accept: informationType,
-          'Content-Type': informationType,
-          Authorization: token,
-        },
-      }).then((response) => response.json());
+      const results = await fetch(`http://localhost:3001/drink/letter/${search}`, 
+      fetchInfosMethod(methods.get)).then((response) => response.json());
       return results;
     }
   };
 
   const drinkDetailsFetch = async (id) => {
-    const results = await fetch(`http://localhost:3001/drink/id/${id}`, {
-        method: 'GET',
-        headers: {
-          Accept: informationType,
-          'Content-Type': informationType,
-        },
-      })
-    .then((response) => response.json());
+    const results = await fetch(`http://localhost:3001/drink/id/${id}`, 
+      fetchInfosMethod(methods.get)).then((response) => response.json());
     return results;
   };
 
@@ -112,15 +113,8 @@ function useFetch() {
   }
 
   const updateDrink = async(recipe, token) => {
-    const result = await fetch(`http://localhost:3001/drink/${recipe.id}`, {
-      method: methods.put,
-      headers: {
-        Accept: informationType,
-        'Content-Type': informationType,
-        Authorization: token.token
-      },
-      body: JSON.stringify(recipe),
-    });
+    const result = await fetch(`http://localhost:3001/drink/${recipe.id}`,
+    fetchInfosWithBodyAndToken(recipe, methods.put, token));
     const data = await result.json();
     return data;
   }
@@ -138,15 +132,8 @@ function useFetch() {
   };
 
   const createNewDrink = async(drink, token) => {
-    const result = await fetch('http://localhost:3001/drink', {
-      method: methods.post,
-      headers: {
-        Accept: informationType,
-        'Content-Type': informationType,
-        Authorization: token.token
-      },
-      body: JSON.stringify(drink),
-    });
+    const result = await fetch('http://localhost:3001/drink',
+    fetchInfosWithBodyAndToken(drink, methods.post, token));
     const data = await result.json();
     return data;
   }

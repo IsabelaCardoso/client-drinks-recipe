@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
+import BackToHomeArrow from "../components/BackToHomeArrow";
 import RecipeForm from '../components/RecipeForm';
-import Titles from '../components/Titles';
 import DrinksContext from '../context/Context';
 import useFetch from '../services/useFetch';
 
@@ -20,9 +20,10 @@ function EditPage({ history }) {
   return (
     <>
       <Header history={ history } subtitle="Edit Drink Recipe" />
-      { oneRecipe 
-        ? <RecipeForm history={ history } recipe={ oneRecipe }/>
-        : setLoading(true)
+      <BackToHomeArrow />
+      { oneRecipe.name !== '' 
+        ? <RecipeForm history={ history } />
+        : <div>Loading the recipe...</div>
       }
     </>
   );

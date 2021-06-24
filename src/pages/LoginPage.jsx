@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import UsersForm from "../components/UsersForm";
 import Header from "../components/Header";
 import DrinksContext from "../context/Context";
+import BackToHomeArrow from "../components/BackToHomeArrow";
 
 function LoginPage({ history }) {
   const { setNotAuthorizedMessage, notAuthorizedMessage } = useContext(DrinksContext);
@@ -9,6 +10,7 @@ function LoginPage({ history }) {
   return (
     <>
       <Header history={history} subtitle="Login" />
+      <BackToHomeArrow />
       <UsersForm history={history} />
       <span hidden={!notAuthorizedMessage} className="notification is-warning ml-5">
         <button

@@ -11,8 +11,21 @@ function DrinksProvider({ children }) {
   const [categoryRequired, setCategoryRequired] = useState(false);
   const [drinkDeletedMessage, setDrinkDeletedMessage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [oneRecipe, setOneRecipe] = useState();
-  const [notAuthorizedMessage, setNotAuthorizedMessage] = useState();
+  const [oneRecipe, setOneRecipe] = useState({
+    name: "",
+    category: "",
+    instructions: "",
+    image: "",
+    ingredients: [
+      { ingredient: "", measure: "" },
+      { ingredient: "", measure: "" },
+      { ingredient: "", measure: "" },
+      { ingredient: "", measure: "" },
+      { ingredient: "", measure: "" },
+      { ingredient: "", measure: "" },
+    ],
+  });
+  const [notAuthorizedMessage, setNotAuthorizedMessage] = useState(false);
 
   const context = {
     recipes,

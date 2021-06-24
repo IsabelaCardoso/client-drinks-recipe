@@ -3,7 +3,7 @@ import DrinksContext from "../context/Context";
 import useFetch from "../services/useFetch";
 
 function RecipeForm({ history }) {
-  const { oneRecipe, loading, setNotAuthorizedMessage } = useContext(DrinksContext);
+  const { oneRecipe, setNotAuthorizedMessage } = useContext(DrinksContext);
   const [ingredientsList, setIngredientsList] = useState([]);
   const [remainingItemsList, setRemainingItemsList] = useState([]);
   const { updateDrink, getToken, createNewDrink } = useFetch();
@@ -23,20 +23,26 @@ function RecipeForm({ history }) {
     separateRecipeIntoTwoLists();
   }, [oneRecipe]);
 
-  const handleEditSubmit = async () => {
+  const addNewDrink = async(newRecipe, token) => {
+    const newDrink = await createNewDrink(newRecipe, token);
+    return history.push(`/details/${newDrink.id}`);
+  };
+
+  const drinkUpdate = async(newRecipe, token) => {
+    await updateDrink(newRecipe, token);
+    return history.push(`/details/${id}`);
+  }
+
+  const handleFormSubmit = async () => {
     let newRecipe = Object.fromEntries(remainingItemsList);
     let onlyIngredients = [];
+
     ingredientsList.map((item) => onlyIngredients.push(item[1]));
     newRecipe = { ...newRecipe, ingredients: onlyIngredients };
     const token = getToken();
-    if (originPath === '/create') {
-      const newDrink = await createNewDrink(newRecipe, token);
-      return history.push(`/details/${newDrink.id}`);
 
-    } else {
-      await updateDrink(newRecipe, token);
-      return history.push(`/details/${id}`);
-    }
+    if (originPath === '/create') return addNewDrink(newRecipe, token);
+    drinkUpdate(newRecipe, token);
   };
 
   const separateRecipeIntoTwoLists = () => {
@@ -85,9 +91,6 @@ function RecipeForm({ history }) {
       setRemainingItemsList(newList);
     }
   };
-
-  if (loading) return <div>Loading the oneRecipe...</div>;
-
   return (
     <div>
       <form className="form-div">
@@ -157,7 +160,7 @@ function RecipeForm({ history }) {
         ))}
       <button
         type="button"
-        onClick={() => handleEditSubmit()}
+        onClick={() => handleFormSubmit()}
         className="button search-button is-outlined ml-1"
       >
         { originPath === '/create' ? 'Create' : 'Submit' }
