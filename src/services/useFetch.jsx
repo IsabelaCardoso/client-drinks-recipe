@@ -10,6 +10,7 @@ function useFetch() {
     post: 'POST',
     get: 'GET',
     put: 'PUT',
+    delete: 'DELETE'
   };
 
   const submitLogin = async(email, password) => {
@@ -35,6 +36,7 @@ function useFetch() {
       body: JSON.stringify({ fullName, email, password }),
     });
     const data = await result.json();
+    console.log('data', data);
     return data;
   }
 
@@ -112,8 +114,6 @@ function useFetch() {
   }
 
   const updateDrink = async(recipe, token) => {
-    // console.log('token', token.token)
-    console.log(recipe)
     const result = await fetch(`http://localhost:3001/drink/${recipe.id}`, {
       method: methods.put,
       headers: {
@@ -124,7 +124,32 @@ function useFetch() {
       body: JSON.stringify(recipe),
     });
     const data = await result.json();
-    console.log('data', data);
+    return data;
+  }
+
+  const deleteDrink = async(id, token) => {
+    await fetch(`http://localhost:3001/drink/${id}`, {
+      method: methods.delete,
+      headers: {
+        Accept: informationType,
+        'Content-Type': informationType,
+        Authorization: token.token
+      },
+    });
+    return null;
+  };
+
+  const createNewDrink = async(drink, token) => {
+    const result = await fetch('http://localhost:3001/drink', {
+      method: methods.post,
+      headers: {
+        Accept: informationType,
+        'Content-Type': informationType,
+        Authorization: token.token
+      },
+      body: JSON.stringify(drink),
+    });
+    const data = await result.json();
     return data;
   }
 
@@ -137,6 +162,8 @@ function useFetch() {
     getAllById,
     getToken,
     updateDrink,
+    deleteDrink,
+    createNewDrink,
   };
 }
 

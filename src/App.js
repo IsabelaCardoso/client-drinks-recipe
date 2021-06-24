@@ -6,6 +6,7 @@ import './App.css'
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import EditPage from './pages/EditPage';
+import CreateDrinkPage from './pages/CreateDrinkPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={ HomePage }/>
           <Route path="/login" component={ LoginPage } />
+          <Route path="/create" component={ CreateDrinkPage } />
           <Route path="/register" component={ RegisterPage } />
           <Route path="/details/:id" component={ DetailsPage } />
           <Route path="/favorite" component={ FavoriteDrinksPage } />
