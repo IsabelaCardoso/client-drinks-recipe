@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import Header from '../components/Header';
 import RecipeForm from '../components/RecipeForm';
 import Titles from '../components/Titles';
 import DrinksContext from '../context/Context';
@@ -18,7 +19,7 @@ function EditPage({ history }) {
 
   return (
     <>
-      <Titles subtitle="Edit Drink Recipe" />
+      <Header history={ history } subtitle="Edit Drink Recipe" />
       { oneRecipe 
         ? <RecipeForm history={ history } recipe={ oneRecipe }/>
         : setLoading(true)

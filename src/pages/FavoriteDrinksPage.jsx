@@ -31,7 +31,7 @@ function FavoriteDrinksPage({ history }) {
 
   return (
     <>
-      <Titles subtitle="Favorites" />
+      <Header history={ history } subtitle="Favorites" />
       {/* <Header history={ history } subtitle="Favorites" /> */}
       <BackToHomeArrow />
       <div className="container">

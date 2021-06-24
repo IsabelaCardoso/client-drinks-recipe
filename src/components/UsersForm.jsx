@@ -58,7 +58,7 @@ function UsersForm({ history }) {
   };
 
   return (
-    <div className="form-div">
+    <div className="form-div mt-3">
       <form>
         {originPath === "/register" && (
           <div className="field">

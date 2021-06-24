@@ -11,7 +11,8 @@ function DrinksProvider({ children }) {
   const [categoryRequired, setCategoryRequired] = useState(false);
   const [drinkDeletedMessage, setDrinkDeletedMessage] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [oneRecipe, setOneRecipe] = useState()
+  const [oneRecipe, setOneRecipe] = useState();
+  const [notAuthorizedMessage, setNotAuthorizedMessage] = useState();
 
   const context = {
     recipes,
@@ -32,6 +33,8 @@ function DrinksProvider({ children }) {
     setOneRecipe,
     loading,
     setLoading,
+    notAuthorizedMessage,
+    setNotAuthorizedMessage
   };
 
   return (

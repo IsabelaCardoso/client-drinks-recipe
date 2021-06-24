@@ -11,7 +11,7 @@ function Header({ history, subtitle }) {
   const originPath = history.location.pathname;
 
   return (
-    <div>
+    <div className="mb-3">
       <Titles subtitle={subtitle} />
       <nav
         className="navbar is-flex is-flex-direction-column"

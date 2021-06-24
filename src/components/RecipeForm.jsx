@@ -3,7 +3,7 @@ import DrinksContext from "../context/Context";
 import useFetch from "../services/useFetch";
 
 function RecipeForm({ history }) {
-  const { oneRecipe, setOneRecipe, loading, setLoading } = useContext(DrinksContext);
+  const { oneRecipe, loading, setNotAuthorizedMessage } = useContext(DrinksContext);
   // const [loading, setLoading] = useState(true);
   const [ingredientsList, setIngredientsList] = useState([]);
   const [remainingItemsList, setRemainingItemsList] = useState([]);
@@ -12,8 +12,15 @@ function RecipeForm({ history }) {
   const id = window.location.href.split("edit/")[1];
   const originPath = history.location.pathname;
 
+  const checkTokenForEdit = () => {
+    const token = JSON.parse(localStorage.getItem('user'));
+    if (!token || !token.token) history.push('/login');
+    setNotAuthorizedMessage(true);
+    return null;
+  }
+
   useEffect(() => {
-    // checkToken()
+    checkTokenForEdit()
     separateRecipeIntoTwoLists();
   }, [oneRecipe]);
 
@@ -149,16 +156,6 @@ function RecipeForm({ history }) {
             </label>
           </div>
         ))}
-        {
-          originPath === '/create' && 
-            <button
-              type="button"
-              // onClick={ () => handleMoreIngredientsField() }
-              className="button search-button is-outlined ml-1"
-            >
-              More Ingredients
-            </button>
-        }
       <button
         type="button"
         onClick={() => handleEditSubmit()}

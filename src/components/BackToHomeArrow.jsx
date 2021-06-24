@@ -5,7 +5,7 @@ function BackArrow() {
   return (
     <Link to='/'>
       <button
-        className="button is-white"
+        className="button is-white mb-3"
         data-testid="share-button"      
         type="button"
       >
