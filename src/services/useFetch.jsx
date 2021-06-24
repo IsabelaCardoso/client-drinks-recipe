@@ -36,7 +36,6 @@ function useFetch() {
       body: JSON.stringify({ fullName, email, password }),
     });
     const data = await result.json();
-    console.log('data', data);
     return data;
   }
 
@@ -91,7 +90,6 @@ function useFetch() {
         headers: {
           Accept: informationType,
           'Content-Type': informationType,
-          // Authorization: token,
         },
       })
     .then((response) => response.json());

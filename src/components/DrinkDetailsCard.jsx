@@ -75,21 +75,23 @@ function DrinkDetailsCard({ history }) {
         <FavoriteButton drinkId={parseInt(idDrink)} />
         <ShareButton />
       </div>
-      <Link to={`/edit/${ idDrink }`}>
+      <div className="mt-5">
+        <Link to={`/edit/${ idDrink }`}>
+          <button
+            type="button"
+            className="button search-button is-outlined m-0 mr-5"
+          >
+            Edit Drink
+          </button>
+        </Link>
         <button
+          onClick={() => handleDeleteDrink()}
           type="button"
-          className="button search-button is-outlined m-0 mr-2"
+          className="button search-button is-outlined m-0 ml-3 mr-2"
         >
-          Edit Drink
+          Delete Drink
         </button>
-      </Link>
-      <button
-        onClick={() => handleDeleteDrink()}
-        type="button"
-        className="button search-button is-outlined m-0 mr-2"
-      >
-        Delete Drink
-      </button>
+      </div>
     </div>
   );
 }

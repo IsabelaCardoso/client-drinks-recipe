@@ -4,7 +4,6 @@ import useFetch from "../services/useFetch";
 
 function RecipeForm({ history }) {
   const { oneRecipe, loading, setNotAuthorizedMessage } = useContext(DrinksContext);
-  // const [loading, setLoading] = useState(true);
   const [ingredientsList, setIngredientsList] = useState([]);
   const [remainingItemsList, setRemainingItemsList] = useState([]);
   const { updateDrink, getToken, createNewDrink } = useFetch();
