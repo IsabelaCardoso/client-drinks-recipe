@@ -44,6 +44,9 @@ Rode a aplicação
 
 ### `npm start`
 
+#### Observação: É necessário que as duas aplicações estejam rodando localmente juntas.
+
+
 ## Rodando os Testes
 
 ### `npm test`
