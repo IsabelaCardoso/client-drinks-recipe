@@ -15,6 +15,8 @@ function DrinksList() {
     setNoRecipesMessage,
     setCategoryRequired,
     categoryRequired,
+    setDrinkDeletedMessage,
+    drinkDeletedMessage,
   } = useContext(DrinksContext);
 
   useEffect(() => {
@@ -48,6 +50,13 @@ function DrinksList() {
               className="delete"
             ></button>
             Please choose a category.
+          </span>
+          <span hidden={!drinkDeletedMessage} className="notification is-warning">
+            <button
+              onClick={() => setDrinkDeletedMessage(!drinkDeletedMessage)}
+              className="delete"
+            ></button>
+            Drink deleted with success.
           </span>
       </div>
       <div className="container is-flex">

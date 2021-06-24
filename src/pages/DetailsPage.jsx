@@ -3,12 +3,12 @@ import BackToHomeArrow from "../components/BackToHomeArrow";
 import DrinkDetailsCard from "../components/DrinkDetailsCard";
 import Titles from "../components/Titles";
 
-function DetailsPage() {
+function DetailsPage({ history }) {
   return (
     <div className="container home-page is-fluid">
       <Titles subtitle="Complete Recipe" />
       <BackToHomeArrow />
-      <DrinkDetailsCard />
+      <DrinkDetailsCard history={ history } />
     </div>
   );
 }

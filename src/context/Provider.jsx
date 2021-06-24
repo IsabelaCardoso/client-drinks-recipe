@@ -9,6 +9,9 @@ function DrinksProvider({ children }) {
   const [oneWordHidden, setOneWordHidden] = useState(false);
   const [invalidNameHidden, setInvalidNameHidden] = useState(false);
   const [categoryRequired, setCategoryRequired] = useState(false);
+  const [drinkDeletedMessage, setDrinkDeletedMessage] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [oneRecipe, setOneRecipe] = useState()
 
   const context = {
     recipes,
@@ -23,6 +26,12 @@ function DrinksProvider({ children }) {
     setInvalidNameHidden,
     categoryRequired,
     setCategoryRequired,
+    drinkDeletedMessage,
+    setDrinkDeletedMessage,
+    oneRecipe,
+    setOneRecipe,
+    loading,
+    setLoading,
   };
 
   return (

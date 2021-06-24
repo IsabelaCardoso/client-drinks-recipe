@@ -4,8 +4,9 @@ import useFetch from "../services/useFetch";
 import DrinksCard from "../components/DrinksCard";
 import Titles from "../components/Titles";
 import BackToHomeArrow from "../components/BackToHomeArrow";
+import Header from "../components/Header";
 
-function FavoriteDrinksPage() {
+function FavoriteDrinksPage({ history }) {
   const [loading, setLoading] = useState(true);
   const { getAllById } = useFetch();
   const { recipes, setRecipes } = useContext(DrinksContext);
@@ -31,6 +32,7 @@ function FavoriteDrinksPage() {
   return (
     <>
       <Titles subtitle="Favorites" />
+      {/* <Header history={ history } subtitle="Favorites" /> */}
       <BackToHomeArrow />
       <div className="container">
         <div>

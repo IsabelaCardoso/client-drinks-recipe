@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import Titles from "./Titles";
 import useFetch from "../services/useFetch";
 
-function Header({ subtitle }) {
+function Header({ history, subtitle }) {
   const [searchBar, setSearchBar] = useState(false);
   const { randomDrinksFetch } = useFetch();
+
+  const originPath = history.location.pathname;
 
   return (
     <div>
@@ -26,6 +28,9 @@ function Header({ subtitle }) {
             <p className="navbar-item">
               <Link to="/favorite">Favorite Drinks</Link>
             </p>
+            <p className="navbar-item">
+              <Link to="/create">Create Drink</Link>
+            </p>
           </div>
           <div className="navbar-end">
             <p className="navbar-item">
@@ -37,6 +42,7 @@ function Header({ subtitle }) {
           </div>
         </div>
         <div className="navbar-end">
+          { originPath === '/' && 
           <div className="navbar-item is-align-items-flex-start">
             <button
               onClick={() => setSearchBar(!searchBar)}
@@ -46,6 +52,7 @@ function Header({ subtitle }) {
             </button>
             {searchBar && <SearchBar />}
           </div>
+          }
         </div>
       </nav>
     </div>

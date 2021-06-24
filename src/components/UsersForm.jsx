@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Joi from "joi";
 import useFetch from "../services/useFetch";
 
-function Form({ history }) {
+function UsersForm({ history }) {
   const { submitLogin, submitRegister } = useFetch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -40,14 +40,19 @@ function Form({ history }) {
   const handleSubmit = () => {
     const isEmailTrue = validateEmail(email);
     const isPasswordTrue = validatePassword(password);
+
     if (originPath === "/login") {
+      if (validateEmail === false || validatePassword === false) return alert('Email or password invalid');
       if (isPasswordTrue === true && isEmailTrue === true) return submitLogin(email, password).then((result) => handleToken(result));
-      if (validateEmail || validatePassword === false) return alert('Email or password invalid');
     }
     if (originPath === "/register") {
-      const isFullNameTrue = validateFullName();
+      const isFullNameTrue = validateFullName(fullName);
       const data = { fullName, password, email };
-      if (isFullNameTrue && isEmailTrue && isPasswordTrue === true) submitRegister(data).then((result) => handleToken(result))
+      if (
+        isFullNameTrue === true
+        && isEmailTrue === true
+        && isPasswordTrue === true
+      ) return submitRegister(data).then((result) => handleToken(result))
       return alert('Invalid fields');
     }
   };
@@ -110,7 +115,6 @@ function Form({ history }) {
           <p className="help">Your password must be at least 6 characters</p>
         </div>
       </form>
-      {/* <p hidden={ hidden }>{ invalidFieldMessage }</p> */}
       <button
         className="button search-button is-outlined ml-0"
         type="button"
@@ -129,9 +133,15 @@ function Form({ history }) {
           Register
         </button>
       )}
-      <span hidden={spanMessage}>{responseMessage}</span>
+        <p hidden={spanMessage} className="notification is-warning">
+            <button
+              onClick={() => setSpanMessage(!spanMessage)}
+              className="delete"
+            ></button>
+            { responseMessage }
+          </p>
     </div>
   );
 }
 
-export default Form;
+export default UsersForm;

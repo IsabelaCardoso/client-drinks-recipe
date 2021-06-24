@@ -5,9 +5,9 @@ import useFetch from "../services/useFetch";
 import FavoriteButton from "./FavoriteButton";
 import ShareButton from "./ShareButton";
 
-function DrinkDetailsCard() {
-  const { drinkDetailsFetch } = useFetch();
-  const { recipes, setRecipes } = useContext(DrinksContext);
+function DrinkDetailsCard({ history }) {
+  const { drinkDetailsFetch, deleteDrink, getToken } = useFetch();
+  const { recipes, setRecipes, setDrinkDeletedMessage } = useContext(DrinksContext);
   const [loading, setLoading] = useState(true);
 
   const idDrink = window.location.href.split("details/")[1];
@@ -17,6 +17,20 @@ function DrinkDetailsCard() {
       .then((result) => setRecipes(result))
       .then(() => setLoading(false));
   }, []);
+
+  const deleteFromLocalStorage = () => {
+      const objectList = JSON.parse(localStorage.getItem('favoriteDrinks'));
+      const newList = objectList.filter((drink) => drink.id !== parseInt(idDrink))
+      localStorage.setItem('favoriteDrinks', JSON.stringify(newList));
+  };
+
+  const handleDeleteDrink = async() => {
+    deleteFromLocalStorage()
+    const token = getToken()
+    await deleteDrink(idDrink, token);
+    history.push('/');
+    setDrinkDeletedMessage(true);
+  };
 
   if (loading) return <div>Loading the recipe...</div>;
 
@@ -63,11 +77,19 @@ function DrinkDetailsCard() {
       </div>
       <Link to={`/edit/${ idDrink }`}>
         <button
+          type="button"
           className="button search-button is-outlined m-0 mr-2"
         >
           Edit Drink
         </button>
       </Link>
+      <button
+        onClick={() => handleDeleteDrink()}
+        type="button"
+        className="button search-button is-outlined m-0 mr-2"
+      >
+        Delete Drink
+      </button>
     </div>
   );
 }
